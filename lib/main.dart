@@ -5,9 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'constants/palette.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/splash/splash_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
   runApp(
     const TopitupNg(),
   );
@@ -44,6 +52,7 @@ class TopitupNg extends StatelessWidget {
         initialRoute: SplashScreen.id,
         routes: {
           SplashScreen.id: (context) => const SplashScreen(),
+          OnboardingScreen.id: (context) => const OnboardingScreen(),
           HomeScreen.id: (context) => const HomeScreen(),
         },
       ),
