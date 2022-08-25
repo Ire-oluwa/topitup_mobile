@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../constants/app_constants.dart';
 import '../components/custom_auth_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
+import '../login/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class HomeScreen extends StatelessWidget {
                 CustomText(
                   text: 'Get started with',
                   textSize: 20.0.sp,
+                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w400,
                   alignText: TextAlign.center,
                   textColor: Colors.white,
@@ -40,6 +43,7 @@ class HomeScreen extends StatelessWidget {
                 CustomText(
                   text: 'Topitupng',
                   textSize: 40.0.sp,
+                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w700,
                   alignText: TextAlign.center,
                   textColor: Colors.white,
@@ -64,7 +68,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: CustomTextButton(
                     text: 'Login',
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      LoginScreen.id,
+                    ),
                     backgroundColour: kSecondaryColour,
                     borderColour: Colors.transparent,
                     textColour: Colors.white,

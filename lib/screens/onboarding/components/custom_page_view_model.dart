@@ -43,6 +43,7 @@ class CustomPageViewModel extends StatelessWidget {
             children: [
               CustomText(
                 text: headerDescription,
+                fontFamily: 'Montserrat',
                 textColor: headerColour,
                 textSize: 35.sp,
                 fontWeight: FontWeight.w700,
