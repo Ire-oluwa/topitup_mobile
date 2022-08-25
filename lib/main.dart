@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'constants/palette.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/login/login_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/splash/splash_screen.dart';
 
@@ -40,10 +40,9 @@ class TopitupNg extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Palette.kCustomColour,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          scaffoldBackgroundColor: const Color(0xFFFCFCFC),
-          textTheme: GoogleFonts.interTextTheme(
-            Theme.of(context).textTheme,
-          ).copyWith(
+          // scaffoldBackgroundColor: const Color(0xFFFCFCFC),
+          fontFamily: 'SF-Pro-Text',
+          textTheme: TextTheme(
             bodyText2: TextStyle(
               fontSize: 14.0.sp,
             ),
@@ -54,6 +53,7 @@ class TopitupNg extends StatelessWidget {
           SplashScreen.id: (context) => const SplashScreen(),
           OnboardingScreen.id: (context) => const OnboardingScreen(),
           HomeScreen.id: (context) => const HomeScreen(),
+          LoginScreen.id: (context) => const LoginScreen(),
         },
       ),
     );

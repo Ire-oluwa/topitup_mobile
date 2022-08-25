@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomText extends StatelessWidget {
   final String text;
   final double? textSize;
+  final String? fontFamily;
   final FontWeight? fontWeight;
   final Color? textColor;
   final TextAlign? alignText;
@@ -18,6 +19,7 @@ class CustomText extends StatelessWidget {
     this.alignText,
     this.overflow,
     this.softwrap,
+    this.fontFamily,
   }) : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class CustomText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
+        fontFamily: fontFamily,
         fontSize: textSize,
         fontWeight: fontWeight,
         color: textColor,
