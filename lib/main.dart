@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:topitup/screens/signup/signup_screen.dart';
 
 import 'constants/palette.dart';
 import 'screens/home/home_screen.dart';
@@ -54,6 +55,7 @@ class TopitupNg extends StatelessWidget {
           OnboardingScreen.id: (context) => const OnboardingScreen(),
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
+          SignupScreen.id: (context) => const SignupScreen(),
         },
       ),
     );

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:topitup/screens/signup/signup_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../components/custom_auth_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
 import '../components/custom_text_form_field.dart';
-import 'components/login_form_section_divider.dart';
+import '../components/login_form_section_divider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -34,12 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: CustomAuthScreenBackground(
             child: SingleChildScrollView(
               child: SizedBox(
-                height: size.height * 0.92,
+                height: size.height * 0.95,
                 child: Stack(
                   children: [
                     SizedBox(
-                      height: size.height * 0.6,
+                      height: size.height * 0.65,
                       child: Card(
+                        elevation: 1,
                         margin: EdgeInsets.fromLTRB(
                           kDefaultPadding.w + 10,
                           kDefaultPadding.h * 3,
@@ -182,9 +184,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const CustomText(
                                         text: 'New to Topitupng? '),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () => Navigator.of(context)
+                                          .pushReplacementNamed(
+                                        SignupScreen.id,
+                                      ),
                                       child: const CustomText(
-                                        text: 'Sign up here.',
+                                        text: 'Sign up here',
                                         textColor: kSecondaryColour,
                                       ),
                                     ),
@@ -197,10 +202,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Positioned(
-                      bottom: 35.h,
+                      bottom: 25.h,
                       right: 5.w,
-                      child: Image.asset(
-                        'assets/young_man.png',
+                      child: SizedBox(
+                        height: size.height * 0.4,
+                        child: Image.asset(
+                          'assets/young_man.png',
+                        ),
                       ),
                     ),
                   ],

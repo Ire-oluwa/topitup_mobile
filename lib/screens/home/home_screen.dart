@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:topitup/screens/signup/signup_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../components/custom_auth_screen_background.dart';
@@ -85,7 +86,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   child: CustomTextButton(
                     text: 'Sign Up',
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      SignupScreen.id,
+                    ),
                     backgroundColour: Colors.transparent,
                     borderColour: kSecondaryColour,
                     textColour: kSecondaryColour,
