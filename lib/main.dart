@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:topitup/screens/signup/signup_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:topitup/providers/device_info_provider.dart';
+import 'package:topitup/screens/dashboard/dashboard_screen.dart';
 
 import 'constants/palette.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/login/login_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
+import 'screens/signup/signup_screen.dart';
 import 'screens/splash/splash_screen.dart';
 
 void main() {
@@ -18,7 +21,12 @@ void main() {
     ),
   );
   runApp(
-    const TopitupNg(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => DeviceInfo()),
+      ],
+      child: const TopitupNg(),
+    ),
   );
 }
 
@@ -56,6 +64,7 @@ class TopitupNg extends StatelessWidget {
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
           SignupScreen.id: (context) => const SignupScreen(),
+          DashboardScreen.id: (context) => const DashboardScreen(),
         },
       ),
     );
