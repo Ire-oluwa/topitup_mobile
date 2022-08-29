@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:topitup/screens/signup/signup_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../components/custom_auth_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
 import '../login/login_screen.dart';
+import '../signup/signup_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);

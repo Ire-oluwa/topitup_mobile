@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:platform_device_id/platform_device_id.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:topitup/providers/device_info_provider.dart';
 
 import '../home/home_screen.dart';
 import '../onboarding/onboarding_screen.dart';
@@ -16,7 +19,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  int? initScreen;
+  int? _initScreen;
+  String _deviceId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +44,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void didChangeDependencies() {
+    getDeviceId().then((value) {
+      _deviceId = value!;
+      context.read<DeviceInfo>().deviceId = _deviceId;
+    });
     Timer(
       const Duration(seconds: 5),
       () => Navigator.of(context).pushNamedAndRemoveUntil(
-        initScreen == 0 || initScreen == null
+        _initScreen == 0 || _initScreen == null
             ? OnboardingScreen.id
             : HomeScreen.id,
         (route) => false,
@@ -58,9 +66,14 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
+  Future<String?> getDeviceId() async {
+    String? deviceId = await PlatformDeviceId.getDeviceId;
+    return deviceId;
+  }
+
   void _checkForFirstTimeUser() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    initScreen = preferences.getInt('initScreen');
+    _initScreen = preferences.getInt('initScreen');
   }
 
   void _setFirstTimeUser() async {
