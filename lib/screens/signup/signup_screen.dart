@@ -219,7 +219,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                     Row(
                                       children: [
                                         const CustomText(
-                                            text: 'Already have an account? '),
+                                          text: 'Already have an account? ',
+                                        ),
                                         GestureDetector(
                                           onTap: () => Navigator.of(context)
                                               .pushReplacementNamed(
