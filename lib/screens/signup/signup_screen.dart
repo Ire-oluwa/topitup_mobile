@@ -8,7 +8,6 @@ import 'package:libphonenumber/libphonenumber.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import '../../providers/device_info_provider.dart';
-import '../components/login_form_section_divider.dart';
 import '../../services/networking/web_api/user_api.dart';
 import '../../utils/snackbar.dart';
 import '../../constants/app_constants.dart';
@@ -210,17 +209,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                         textColour: Colors.white,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: kDefaultPadding.h,
-                                    ),
-                                    const LoginFormSectionDivider(),
+                                    // SizedBox(
+                                    //   height: kDefaultPadding.h,
+                                    // ),
+                                    // const LoginFormSectionDivider(),
                                     const SizedBox(
                                       height: kDefaultPadding / 2,
                                     ),
                                     Row(
                                       children: [
                                         const CustomText(
-                                            text: 'Already have an account? '),
+                                          text: 'Already have an account? ',
+                                        ),
                                         GestureDetector(
                                           onTap: () => Navigator.of(context)
                                               .pushReplacementNamed(
@@ -232,12 +232,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                           ),
                                         ),
                                       ],
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      context.read<DeviceInfo>().getDeviceId,
                                     ),
                                     // SizedBox(
                                     //   height: 8.h,
