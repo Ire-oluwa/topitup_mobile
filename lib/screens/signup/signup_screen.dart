@@ -233,6 +233,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                         ),
                                       ],
                                     ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      context.read<DeviceInfo>().getDeviceId,
+                                    ),
                                     // SizedBox(
                                     //   height: 8.h,
                                     // ),
@@ -290,26 +296,26 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _submitSignup(BuildContext context) {
+  void _submitSignup(BuildContext context) async {
     if (_signupFormKey.currentState!.validate()) {
       if (_isPhoneNumberValid) {
         _makeLoadingTrue();
-        _signupUser(context);
-        return;
+        await _signupUser(context);
+      } else {
+        displaySnackbar(
+          context,
+          'Invalid phone number',
+        );
       }
+    } else {
       displaySnackbar(
         context,
-        'Invalid phone number',
+        'Fill in the form properly!',
       );
-      return;
     }
-    displaySnackbar(
-      context,
-      'Fill in the form properly!',
-    );
   }
 
-  void _signupUser(BuildContext context) async {
+  Future<void> _signupUser(BuildContext context) async {
     final deviceId = context.read<DeviceInfo>().getDeviceId;
     final res = await UserApi.createUser(
       deviceId: deviceId,
@@ -334,21 +340,22 @@ class _SignupScreenState extends State<SignupScreen> {
         );
         Navigator.of(context).pushReplacementNamed(LoginScreen.id);
         return;
+      } else {
+        _makeLoadingFalse();
+        if (!mounted) return;
+        displaySnackbar(
+          context,
+          'Username or Email already exists!',
+        );
       }
+    } else {
       _makeLoadingFalse();
       if (!mounted) return;
       displaySnackbar(
         context,
-        'Username or Email already exists!',
+        'Error occured! Try again later.',
       );
-      return;
     }
-    _makeLoadingFalse();
-    if (!mounted) return;
-    displaySnackbar(
-      context,
-      'Error occured! Try again later.',
-    );
   }
 
   _validatePhoneNumber() async {
