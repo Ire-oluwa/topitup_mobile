@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
 import '../../providers/device_info_provider.dart';
-import '../components/login_form_section_divider.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../signup/signup_screen.dart';
 import '../../services/networking/web_api/user_api.dart';
@@ -111,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     textCapitalization: TextCapitalization.none,
                                     keyboardType: TextInputType.visiblePassword,
                                     inputAction: TextInputAction.done,
-                                    validate: kPasswordValidator,
+                                    validate: kRequiredField,
                                     suffixIcon: IconButton(
                                       icon: FaIcon(
                                         _obscurePassword == false
@@ -152,10 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  const LoginFormSectionDivider(),
+                                  // SizedBox(
+                                  //   height: 8.h,
+                                  // ),
+                                  // const LoginFormSectionDivider(),
                                   // SizedBox(
                                   //   height: 2.h,
                                   // ),
