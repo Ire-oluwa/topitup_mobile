@@ -242,7 +242,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _submitLogin(BuildContext context) async {
     if (_loginFormKey.currentState!.validate()) {
-      _makeLoadingTrue();
       await _loginUser(context);
     } else {
       displaySnackbar(
@@ -253,6 +252,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _loginUser(BuildContext context) async {
+    _makeLoadingTrue();
     final deviceId = context.read<DeviceInfo>().getDeviceId;
     final res = await UserApi.loginUser(
       userName: _userNameController.text,

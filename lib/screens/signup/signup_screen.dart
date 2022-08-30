@@ -293,7 +293,6 @@ class _SignupScreenState extends State<SignupScreen> {
   void _submitSignup(BuildContext context) async {
     if (_signupFormKey.currentState!.validate()) {
       if (_isPhoneNumberValid) {
-        _makeLoadingTrue();
         await _signupUser(context);
       } else {
         displaySnackbar(
@@ -310,6 +309,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> _signupUser(BuildContext context) async {
+    _makeLoadingTrue();
     final deviceId = context.read<DeviceInfo>().getDeviceId;
     final res = await UserApi.createUser(
       deviceId: deviceId,
