@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:libphonenumber/libphonenumber.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/providers/device_info_provider.dart';
-import 'package:topitup/screens/components/login_form_section_divider.dart';
-import 'package:topitup/services/networking/web_api/user_api.dart';
-import 'package:topitup/utils/snackbar.dart';
+import '../../providers/device_info_provider.dart';
+import '../components/login_form_section_divider.dart';
+import '../../services/networking/web_api/user_api.dart';
+import '../../utils/snackbar.dart';
 import '../../constants/app_constants.dart';
 import '../components/custom_auth_screen_background.dart';
 import '../components/custom_text.dart';
@@ -32,6 +35,10 @@ class _SignupScreenState extends State<SignupScreen> {
   final _emailController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  bool _isPhoneNumberValid = false;
+  String _normalizedPhoneNumber = '';
+  RegionInfo? _regionInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -133,25 +140,60 @@ class _SignupScreenState extends State<SignupScreen> {
                                     SizedBox(
                                       height: kDefaultPadding.h / 2,
                                     ),
-                                    CustomTextFormField(
-                                      controller: _phoneNumberController,
-                                      keyboardType: TextInputType.phone,
-                                      inputAction: TextInputAction.next,
-                                      placeholder: 'Phone Number',
-                                      validate: kRequiredField,
+                                    InternationalPhoneNumberInput(
+                                      textFieldController:
+                                          _phoneNumberController,
+                                      onInputChanged: (PhoneNumber number) {
+                                        _validatePhoneNumber();
+                                      },
+                                      inputDecoration: const InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: 1.0,
+                                          horizontal: 8.0,
+                                        ),
+                                        filled: true,
+                                        fillColor: Color(0xffE6ECFA),
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Phone Number',
+                                      ),
+                                      selectorConfig: const SelectorConfig(
+                                        selectorType:
+                                            PhoneInputSelectorType.DIALOG,
+                                        setSelectorButtonAsPrefixIcon: true,
+                                        leadingPadding: 10.0,
+                                      ),
+                                      validator: kRequiredField,
+                                      keyboardAction: TextInputAction.next,
+                                      spaceBetweenSelectorAndTextField: 3.0.w,
+                                      countries: const ['NG'],
                                     ),
                                     SizedBox(
                                       height: kDefaultPadding.h / 2,
                                     ),
                                     CustomTextFormField(
                                       controller: _passwordController,
+                                      obscureText: _obscurePassword,
+                                      placeholder: '********',
+                                      textCapitalization:
+                                          TextCapitalization.none,
                                       keyboardType:
                                           TextInputType.visiblePassword,
                                       inputAction: TextInputAction.done,
-                                      placeholder: 'Password',
                                       validate: kPasswordValidator,
-                                      textCapitalization:
-                                          TextCapitalization.none,
+                                      suffixIcon: IconButton(
+                                        icon: FaIcon(
+                                          _obscurePassword == false
+                                              ? FontAwesomeIcons.solidEyeSlash
+                                              : FontAwesomeIcons.solidEye,
+                                          size: kDefaultIconSize.sp,
+                                        ),
+                                        onPressed: () => setState(
+                                          () {
+                                            _obscurePassword =
+                                                !_obscurePassword;
+                                          },
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: kDefaultPadding.h + 10,
@@ -162,7 +204,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       ),
                                       child: CustomTextButton(
                                         text: 'Register',
-                                        onPressed: () {},
+                                        onPressed: () => _submitSignup(context),
                                         backgroundColour: kSecondaryColour,
                                         borderColour: Colors.transparent,
                                         textColour: Colors.white,
@@ -237,14 +279,95 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-
   @override
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _emailController.dispose();
     _phoneNumberController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  void _submitSignup(BuildContext context) {
+    if (_signupFormKey.currentState!.validate()) {
+      if (_isPhoneNumberValid) {
+        _makeLoadingTrue();
+        _signupUser(context);
+        return;
+      }
+      displaySnackbar(
+        context,
+        'Invalid phone number',
+      );
+      return;
+    }
+    displaySnackbar(
+      context,
+      'Fill in the form properly!',
+    );
+  }
+
+  void _signupUser(BuildContext context) async {
+    final deviceId = context.read<DeviceInfo>().getDeviceId;
+    final res = await UserApi.createUser(
+      deviceId: deviceId,
+      username: _usernameController.text,
+      email: _emailController.text,
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
+      phoneNumber: _normalizedPhoneNumber,
+      password: _passwordController.text,
+    );
+
+    if (res.statusCode == 200) {
+      _makeLoadingFalse();
+      final data = jsonDecode(res.body);
+      if (data['status'] == 1) {
+        // SecureStorage.setUserApiKey(data['api_key']);
+        if (!mounted) return;
+        _makeLoadingFalse();
+        displaySnackbar(
+          context,
+          'Registration Successful, Please Login',
+        );
+        Navigator.of(context).pushReplacementNamed(LoginScreen.id);
+        return;
+      }
+      _makeLoadingFalse();
+      if (!mounted) return;
+      displaySnackbar(
+        context,
+        'Username or Email already exists!',
+      );
+      return;
+    }
+    _makeLoadingFalse();
+    if (!mounted) return;
+    displaySnackbar(
+      context,
+      'Error occured! Try again later.',
+    );
+  }
+
+  _validatePhoneNumber() async {
+    try {
+      var s = _phoneNumberController.text;
+      bool? isValid = await PhoneNumberUtil.isValidPhoneNumber(
+          phoneNumber: s, isoCode: 'NG');
+      String? normalizedNumber = await PhoneNumberUtil.normalizePhoneNumber(
+          phoneNumber: s, isoCode: 'NG');
+      RegionInfo regionInfo =
+          await PhoneNumberUtil.getRegionInfo(phoneNumber: s, isoCode: 'NG');
+      setState(() {
+        _isPhoneNumberValid = isValid ?? false;
+        _normalizedPhoneNumber = normalizedNumber ?? "N/A";
+        _regionInfo = regionInfo;
+      });
+    } catch (e) {
+      print(e);
+    }
   }
 
   void _makeLoadingFalse() {

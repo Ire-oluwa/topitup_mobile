@@ -10,7 +10,7 @@ class DashboardScreen extends StatelessWidget {
     final user = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       body: Center(
-        child: Text('$user'),
+        child: Text('Welcome $user!!'),
       ),
     );
   }

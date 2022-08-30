@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:topitup/providers/device_info_provider.dart';
 
+import '../../providers/device_info_provider.dart';
 import '../home/home_screen.dart';
 import '../onboarding/onboarding_screen.dart';
 

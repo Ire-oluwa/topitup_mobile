@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/providers/device_info_provider.dart';
-import 'package:topitup/screens/components/login_form_section_divider.dart';
-import 'package:topitup/screens/dashboard/dashboard_screen.dart';
-import 'package:topitup/screens/signup/signup_screen.dart';
-import 'package:topitup/services/networking/web_api/user_api.dart';
-import 'package:topitup/services/secure_storage/secure_storage.dart';
+import '../../providers/device_info_provider.dart';
+import '../components/login_form_section_divider.dart';
+import '../dashboard/dashboard_screen.dart';
+import '../signup/signup_screen.dart';
+import '../../services/networking/web_api/user_api.dart';
+import '../../services/secure_storage/secure_storage.dart';
 
 import '../../constants/app_constants.dart';
 import '../../utils/snackbar.dart';
