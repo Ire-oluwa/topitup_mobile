@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/providers/device_info_provider.dart';
-import 'package:topitup/screens/dashboard/dashboard_screen.dart';
+import 'providers/device_info_provider.dart';
+import 'screens/dashboard/dashboard_screen.dart';
 
 import 'constants/palette.dart';
 import 'screens/home/home_screen.dart';

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "679005315302",
+    "project_id": "topitupmobile",
+    "storage_bucket": "topitupmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679005315302:android:aea7fa93f0158004031b27",
+        "android_client_info": {
+          "package_name": "com.topitupng.topitupng"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679005315302-hq209ib2fjieav9qkc28mm9fisgsk1nq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQLMTTVjYX_1lyzQNXLIry87YksXIvqsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679005315302-hq209ib2fjieav9qkc28mm9fisgsk1nq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "679005315302-0skavhl12mt2auj9etqjo2o688n8ef69.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.topitupng.topitupng"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
