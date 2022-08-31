@@ -1,5 +1,5 @@
 class BaseUrl {
-  static String get getBaseUrl => 'https://topitupng.com/';
+  static String get getBaseUrl => 'https://topitupng.com';
 }
 
 class EndpointDirectory {

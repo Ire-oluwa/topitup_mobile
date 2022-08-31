@@ -294,18 +294,18 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_signupFormKey.currentState!.validate()) {
       if (_isPhoneNumberValid) {
         await _signupUser(context);
-      } else {
-        displaySnackbar(
-          context,
-          'Invalid phone number',
-        );
+        return;
       }
-    } else {
       displaySnackbar(
         context,
-        'Fill in the form properly!',
+        'Invalid phone number',
       );
+      return;
     }
+    displaySnackbar(
+      context,
+      'Fill in the form properly!',
+    );
   }
 
   Future<void> _signupUser(BuildContext context) async {
@@ -334,22 +334,21 @@ class _SignupScreenState extends State<SignupScreen> {
         );
         Navigator.of(context).pushReplacementNamed(LoginScreen.id);
         return;
-      } else {
-        _makeLoadingFalse();
-        if (!mounted) return;
-        displaySnackbar(
-          context,
-          'Username or Email already exists!',
-        );
       }
-    } else {
       _makeLoadingFalse();
       if (!mounted) return;
       displaySnackbar(
         context,
-        'Error occured! Try again later.',
+        'Username or Email already exists!',
       );
+      return;
     }
+    _makeLoadingFalse();
+    if (!mounted) return;
+    displaySnackbar(
+      context,
+      'Error occured! Try again later.',
+    );
   }
 
   _validatePhoneNumber() async {

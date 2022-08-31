@@ -243,12 +243,12 @@ class _LoginScreenState extends State<LoginScreen> {
   void _submitLogin(BuildContext context) async {
     if (_loginFormKey.currentState!.validate()) {
       await _loginUser(context);
-    } else {
-      displaySnackbar(
-        context,
-        'Fill in the form properly!',
-      );
+      return;
     }
+    displaySnackbar(
+      context,
+      'Fill in the form properly!',
+    );
   }
 
   Future<void> _loginUser(BuildContext context) async {
@@ -270,22 +270,22 @@ class _LoginScreenState extends State<LoginScreen> {
           (route) => false,
           arguments: data['name'],
         );
-      } else {
-        _makeLoadingFalse();
-        if (!mounted) return;
-        displaySnackbar(
-          context,
-          'Invalid credentials.',
-        );
+        return;
       }
-    } else {
       _makeLoadingFalse();
       if (!mounted) return;
       displaySnackbar(
         context,
-        'Error occured! Try again later.',
+        'Invalid credentials.',
       );
+      return;
     }
+    _makeLoadingFalse();
+    if (!mounted) return;
+    displaySnackbar(
+      context,
+      'Error occured! Try again later.',
+    );
   }
 
   void _makeLoadingFalse() {
