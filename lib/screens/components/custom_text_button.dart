@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:topitup/screens/components/custom_text.dart';
 
 import '../../constants/app_constants.dart';
 
@@ -11,11 +12,17 @@ class CustomTextButton extends StatelessWidget {
     required this.backgroundColour,
     required this.borderColour,
     required this.textColour,
+    this.textLabelSize,
+    this.fontWeight,
+    this.textlabelAlignment,
   }) : super(key: key);
 
   final String text;
   final Function() onPressed;
   final Color textColour, backgroundColour, borderColour;
+  final double? textLabelSize;
+  final FontWeight? fontWeight;
+  final TextAlign? textlabelAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +32,7 @@ class CustomTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
+          foregroundColor: textColour,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -32,9 +40,13 @@ class CustomTextButton extends StatelessWidget {
             color: borderColour,
           ),
           backgroundColor: backgroundColour,
-          primary: textColour,
         ),
-        child: Text(text),
+        child: CustomText(
+          text: text,
+          fontWeight: fontWeight,
+          textSize: textLabelSize,
+          alignText: textlabelAlignment,
+        ),
       ),
     );
   }
