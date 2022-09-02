@@ -19,3 +19,10 @@ final kPasswordValidator = MultiValidator([
   //  errorText: 'Must contain a digit, lowercase & uppercase character')
 ]);
 final kRequiredField = RequiredValidator(errorText: '* Required');
+const kDropdownFieldDecoration = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(
+    vertical: 1.0,
+    horizontal: 8.0,
+  ),
+  hintText: 'Select data',
+);

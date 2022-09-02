@@ -35,8 +35,8 @@ class CustomTextFormField extends StatelessWidget {
       textInputAction: inputAction,
       keyboardType: keyboardType,
       decoration: InputDecoration(
-        filled: true,
-        fillColor: const Color(0xffE6ECFA),
+        // filled: true,
+        // fillColor: const Color(0xffE6ECFA),
         contentPadding: EdgeInsets.symmetric(
           vertical: 8.0.h,
           horizontal: 12.0.w,

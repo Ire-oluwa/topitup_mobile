@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:topitup/constants/app_constants.dart';
 import 'package:topitup/screens/bottom_navigation/bottom_navigation_bar.dart';
 import 'package:topitup/screens/cable/cable_screen.dart';
+import 'package:topitup/screens/components/custom_text.dart';
 import 'package:topitup/screens/dashboard/components/custom_dashboard_feature_icon_card.dart';
 import 'package:topitup/screens/dashboard/components/dashboard_header_profile_details_section.dart';
 import 'package:topitup/screens/dashboard/components/dashboard_header_transaction_details_card.dart';
@@ -22,13 +23,6 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  final List<Widget> _screens = [
-    const DashboardScreen(),
-    const InternetScreen(),
-    const DataScreen(),
-    const ElectricityScreen(),
-    const CableScreen(),
-  ];
 
   int _selectedIndex = 0;
 
@@ -38,7 +32,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // final user = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
       key: _key,
-      drawer: const Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: 'John Williams',
+                        textSize: 20.sp,
+                        fontWeight: FontWeight.w600,
+                        textColor: kPrimaryColour,
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: FaIcon(
+                          FontAwesomeIcons.arrowLeft,
+                          size: kDefaultIconSize.sp,
+                          color: const Color(0xff3A3A3A),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  const CustomText(
+                    text: 'My Account',
+                    textColor: kSecondaryColour,
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         elevation: 0.0,
         actions: [

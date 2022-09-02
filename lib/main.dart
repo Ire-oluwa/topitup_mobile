@@ -28,7 +28,9 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => DeviceInfo()),
+        ChangeNotifierProvider(
+          create: (_) => DeviceInfo(),
+        ),
       ],
       child: const TopitupNg(),
     ),
@@ -62,7 +64,7 @@ class TopitupNg extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: DashboardScreen.id,
+        initialRoute: SplashScreen.id,
         routes: {
           SplashScreen.id: (context) => const SplashScreen(),
           OnboardingScreen.id: (context) => const OnboardingScreen(),
