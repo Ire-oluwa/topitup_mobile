@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/screens/bottom_navigation/bottom_navigation_bar.dart';
 import 'package:topitup/screens/cable/cable_screen.dart';
 import 'package:topitup/screens/data/data_screen.dart';
 import 'package:topitup/screens/electricity/electricity_screen.dart';
@@ -71,13 +70,13 @@ class TopitupNg extends StatelessWidget {
           HomeScreen.id: (context) => const HomeScreen(),
           LoginScreen.id: (context) => const LoginScreen(),
           SignupScreen.id: (context) => const SignupScreen(),
-          BottomNavBar.home: (context) => const BottomNavBar(screenIndex: 0),
-          BottomNavBar.internet: (context) =>
-              const BottomNavBar(screenIndex: 1),
-          BottomNavBar.data: (context) => const BottomNavBar(screenIndex: 2),
-          BottomNavBar.electricity: (context) =>
-              const BottomNavBar(screenIndex: 3),
-          BottomNavBar.cable: (context) => const BottomNavBar(screenIndex: 4),
+          // BottomNavBar.home: (context) => const BottomNavBar(screenIndex: 0),
+          // BottomNavBar.internet: (context) =>
+          //     const BottomNavBar(screenIndex: 1),
+          // BottomNavBar.data: (context) => const BottomNavBar(screenIndex: 2),
+          // BottomNavBar.electricity: (context) =>
+          //     const BottomNavBar(screenIndex: 3),
+          // BottomNavBar.cable: (context) => const BottomNavBar(screenIndex: 4),
           DashboardScreen.id: (context) => const DashboardScreen(),
           InternetScreen.id: (context) => const InternetScreen(),
           DataScreen.id: (context) => const DataScreen(),
