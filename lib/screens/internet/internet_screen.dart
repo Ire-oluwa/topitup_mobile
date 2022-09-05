@@ -58,6 +58,7 @@ class _InternetScreenState extends State<InternetScreen> {
       child: Scaffold(
         body: SafeArea(
           child: CustomScreenBackground(
+            screenName: 'Internet',
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: kDefaultPadding.w / 2,

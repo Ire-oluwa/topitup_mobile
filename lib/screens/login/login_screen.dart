@@ -262,6 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
       if (data['status'] == 1) {
+        print(data['api_key']);
         SecureStorage.setUserApiKey(data['api_key']);
         _makeLoadingFalse();
         if (!mounted) return;

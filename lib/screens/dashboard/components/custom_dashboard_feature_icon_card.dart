@@ -23,8 +23,8 @@ class CustomDashboardFeatureIconCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 90.h,
-              width: 90.w,
+              height: 80.h,
+              width: 80.w,
               child: Card(
                 elevation: 1,
                 shadowColor: kSecondaryColour,
@@ -42,6 +42,8 @@ class CustomDashboardFeatureIconCard extends StatelessWidget {
                   child: SvgPicture.asset(
                     icon,
                     color: Colors.white,
+                    width: 30.w,
+                    height: 30.h,
                   ),
                 ),
               ),
@@ -49,7 +51,7 @@ class CustomDashboardFeatureIconCard extends StatelessWidget {
             CustomText(
               text: label,
               fontWeight: FontWeight.w600,
-              textSize: 15.87.sp,
+              textSize: 13.sp,
               alignText: TextAlign.center,
             ),
           ],

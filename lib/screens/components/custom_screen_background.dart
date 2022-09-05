@@ -7,10 +7,11 @@ import 'package:topitup/screens/components/custom_text.dart';
 class CustomScreenBackground extends StatelessWidget {
   const CustomScreenBackground({
     Key? key,
-    required this.child,
+    required this.child, required this.screenName,
   }) : super(key: key);
 
   final Widget child;
+  final String screenName;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class CustomScreenBackground extends StatelessWidget {
                   ),
                   Center(
                     child: CustomText(
-                      text: 'Internet',
+                      text: screenName,
                       textSize: 16.0.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Montserrat',

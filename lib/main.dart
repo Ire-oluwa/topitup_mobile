@@ -64,7 +64,7 @@ class TopitupNg extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: SplashScreen.id,
+        initialRoute: DashboardScreen.id,
         routes: {
           SplashScreen.id: (context) => const SplashScreen(),
           OnboardingScreen.id: (context) => const OnboardingScreen(),
