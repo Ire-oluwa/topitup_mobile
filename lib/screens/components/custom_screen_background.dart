@@ -7,7 +7,8 @@ import 'package:topitup/screens/components/custom_text.dart';
 class CustomScreenBackground extends StatelessWidget {
   const CustomScreenBackground({
     Key? key,
-    required this.child, required this.screenName,
+    required this.child,
+    required this.screenName,
   }) : super(key: key);
 
   final Widget child;
@@ -24,11 +25,11 @@ class CustomScreenBackground extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40),
+              bottomLeft: Radius.circular(50),
+              bottomRight: Radius.circular(50),
             ),
             child: Container(
-              height: size.height * 0.15,
+              height: size.height * 0.18,
               color: kPrimaryColour,
               child: Column(
                 children: [
