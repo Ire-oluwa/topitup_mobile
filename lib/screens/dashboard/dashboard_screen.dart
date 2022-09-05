@@ -86,6 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       appBar: AppBar(
         elevation: 0.0,
+        shadowColor: Colors.transparent,
         actions: [
           IconButton(
             onPressed: () {},
@@ -185,7 +186,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: kDefaultPadding.h + 5,
+                      height: kDefaultPadding.h * 2,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -200,6 +201,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         CustomDashboardFeatureIconCard(
                           icon: 'assets/svg/electricity-icon.svg',
                           label: 'Pay Electric Bills',
+                          onPressed: () => Navigator.of(context).pushNamed(
+                            ElectricityScreen.id,
+                          ),
+                        ),
+                        CustomDashboardFeatureIconCard(
+                          icon: 'assets/svg/others.svg',
+                          label: 'Others',
                           onPressed: () => Navigator.of(context).pushNamed(
                             ElectricityScreen.id,
                           ),

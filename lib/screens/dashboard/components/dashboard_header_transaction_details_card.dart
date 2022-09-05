@@ -23,7 +23,7 @@ class DashboardHeaderTransactionDetailsCard extends StatelessWidget {
           10.0,
         ),
       ),
-      elevation: 4,
+      elevation: 2,
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: kDefaultPadding.w,
@@ -44,14 +44,14 @@ class DashboardHeaderTransactionDetailsCard extends StatelessWidget {
                 children: [
                   CustomText(
                     text: 'Wallet',
-                    textSize: 20.sp,
+                    textSize: 18.sp,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w600,
                     textColor: Palette.kCustomColour.shade50,
                   ),
                   CustomText(
                     text: '₦$walletAmount',
-                    textSize: 24.sp,
+                    textSize: 20.sp,
                     fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w700,
                     textColor: kSecondaryColour,
@@ -85,6 +85,7 @@ class DashboardHeaderTransactionDetailsCard extends StatelessWidget {
                       const CustomText(
                         text: ' Cashback',
                         fontFamily: 'Montserrat',
+                        textColor: Colors.black45,
                       ),
                       const Spacer(),
                       CustomText(text: '₦$cashbackAmount'),
@@ -104,6 +105,7 @@ class DashboardHeaderTransactionDetailsCard extends StatelessWidget {
                       const CustomText(
                         text: ' Voucher',
                         fontFamily: 'Montserrat',
+                        textColor: Colors.black45,
                       ),
                       const Spacer(),
                       CustomText(text: voucherAmount),
