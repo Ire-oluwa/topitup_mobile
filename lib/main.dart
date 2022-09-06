@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/screens/cable/cable_screen.dart';
-import 'package:topitup/screens/data/data_screen.dart';
-import 'package:topitup/screens/electricity/electricity_screen.dart';
-import 'package:topitup/screens/internet/internet_screen.dart';
+import 'providers/api_key_provider.dart';
+import 'screens/cable/cable_screen.dart';
+import 'screens/data/data_screen.dart';
+import 'screens/electricity/electricity_screen.dart';
+import 'screens/internet/internet_screen.dart';
 import 'providers/device_info_provider.dart';
 import 'screens/dashboard/dashboard_screen.dart';
 
@@ -29,6 +30,9 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (_) => DeviceInfo(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ApiKey(),
         ),
       ],
       child: const TopitupNg(),
@@ -63,7 +67,7 @@ class TopitupNg extends StatelessWidget {
             ),
           ),
         ),
-        initialRoute: DashboardScreen.id,
+        initialRoute: SplashScreen.id,
         routes: {
           SplashScreen.id: (context) => const SplashScreen(),
           OnboardingScreen.id: (context) => const OnboardingScreen(),

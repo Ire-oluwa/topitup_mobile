@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:topitup/constants/app_constants.dart';
-import 'package:topitup/screens/components/custom_dropdown_form_field.dart';
-import 'package:topitup/screens/components/custom_screen_background.dart';
-import 'package:topitup/screens/components/custom_text.dart';
-import 'package:topitup/screens/components/custom_text_button.dart';
-import 'package:topitup/screens/components/custom_text_form_field.dart';
+import '../../constants/app_constants.dart';
+import '../components/custom_dropdown_form_field.dart';
+import '../components/custom_screen_background.dart';
+import '../components/custom_text.dart';
+import '../components/custom_text_button.dart';
+import '../components/custom_text_form_field.dart';
 
 class InternetScreen extends StatefulWidget {
   const InternetScreen({Key? key}) : super(key: key);

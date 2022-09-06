@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:topitup/screens/components/custom_text.dart';
+import 'custom_text.dart';
 
 import '../../constants/app_constants.dart';
 
@@ -28,11 +28,11 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 50.0.h,
+      height: 65.0.h,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          primary: textColour,
+          foregroundColor: textColour,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
