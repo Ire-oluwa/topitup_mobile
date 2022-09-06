@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../constants/app_constants.dart';
 import '../../components/custom_text.dart';
 
-class ServiceTypeCard extends StatelessWidget {
-  const ServiceTypeCard({
+class SubServiceTypeCard extends StatelessWidget {
+  const SubServiceTypeCard({
     Key? key,
     required this.label,
-    required this.onPressed, required this.backgroundColour, required this.labelColour,
+    required this.onPressed,
+    required this.backgroundColour,
+    required this.labelColour,
   }) : super(key: key);
 
   final String label;
@@ -30,12 +32,12 @@ class ServiceTypeCard extends StatelessWidget {
           color: backgroundColour,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: kDefaultPadding.w * 2,
-              vertical: kDefaultPadding.h + 2,
+              horizontal: kDefaultPadding.w / 2,
+              vertical: kDefaultPadding.h / 2,
             ),
             child: CustomText(
               text: label,
-              textSize: 15.0.sp,
+              textSize: 14.0.sp,
               textColor: labelColour,
               alignText: TextAlign.center,
             ),

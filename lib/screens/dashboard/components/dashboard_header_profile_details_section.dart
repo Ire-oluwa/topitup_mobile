@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:topitup/constants/app_constants.dart';
-import 'package:topitup/screens/components/custom_text.dart';
+import '../../../constants/app_constants.dart';
+import '../../components/custom_text.dart';
 
 class DashboardHeaderProfileDetailsSection extends StatelessWidget {
   const DashboardHeaderProfileDetailsSection({

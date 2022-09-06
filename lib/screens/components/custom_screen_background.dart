@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:topitup/constants/app_constants.dart';
-import 'package:topitup/screens/components/custom_text.dart';
+import '../../constants/app_constants.dart';
+import 'custom_text.dart';
 
 class CustomScreenBackground extends StatelessWidget {
   const CustomScreenBackground({
@@ -56,7 +56,7 @@ class CustomScreenBackground extends StatelessWidget {
                       textColor: Colors.white,
                       alignText: TextAlign.center,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -64,11 +64,13 @@ class CustomScreenBackground extends StatelessWidget {
           SizedBox(
             height: kDefaultPadding.h,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: kDefaultPadding.w,
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: kDefaultPadding.w,
+              ),
+              child: child,
             ),
-            child: child,
           )
         ],
       ),

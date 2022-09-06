@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:topitup/constants/app_constants.dart';
-import 'package:topitup/screens/bottom_navigation/bottom_navigation_bar.dart';
-import 'package:topitup/screens/cable/cable_screen.dart';
-import 'package:topitup/screens/components/custom_text.dart';
-import 'package:topitup/screens/dashboard/components/custom_dashboard_feature_icon_card.dart';
-import 'package:topitup/screens/dashboard/components/dashboard_header_profile_details_section.dart';
-import 'package:topitup/screens/dashboard/components/dashboard_header_transaction_details_card.dart';
-import 'package:topitup/screens/data/data_screen.dart';
-import 'package:topitup/screens/electricity/electricity_screen.dart';
-import 'package:topitup/screens/internet/internet_screen.dart';
+import '../../constants/app_constants.dart';
+import '../bottom_navigation/bottom_navigation_bar.dart';
+import '../cable/cable_screen.dart';
+import '../components/custom_text.dart';
+import 'components/custom_dashboard_feature_icon_card.dart';
+import 'components/dashboard_header_profile_details_section.dart';
+import 'components/dashboard_header_transaction_details_card.dart';
+import '../data/data_screen.dart';
+import '../electricity/electricity_screen.dart';
+import '../internet/internet_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);

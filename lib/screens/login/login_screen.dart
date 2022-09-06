@@ -5,7 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/screens/dashboard/dashboard_screen.dart';
+import '../../providers/api_key_provider.dart';
+import '../dashboard/dashboard_screen.dart';
 import '../../providers/device_info_provider.dart';
 import '../signup/signup_screen.dart';
 import '../../services/networking/web_api/user_api.dart';
@@ -263,9 +264,10 @@ class _LoginScreenState extends State<LoginScreen> {
       final data = jsonDecode(res.body);
       if (data['status'] == 1) {
         print(data['api_key']);
-        SecureStorage.setUserApiKey(data['api_key']);
-        _makeLoadingFalse();
         if (!mounted) return;
+        SecureStorage.setUserApiKey(data['api_key']);
+        context.read<ApiKey>().apiKey = data['api_key'];
+        _makeLoadingFalse();
         Navigator.of(context).pushNamedAndRemoveUntil(
           DashboardScreen.id,
           (route) => false,
