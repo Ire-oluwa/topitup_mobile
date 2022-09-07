@@ -50,7 +50,7 @@ class CustomScreenBackground extends StatelessWidget {
                   Center(
                     child: CustomText(
                       text: screenName,
-                      textSize: 16.0.sp,
+                      textSize: 18.0.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Montserrat',
                       textColor: Colors.white,
