@@ -5,19 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import '../../providers/api_key_provider.dart';
-import '../dashboard/dashboard_screen.dart';
-import '../../providers/device_info_provider.dart';
-import '../signup/signup_screen.dart';
-import '../../services/networking/web_api/user_api.dart';
-import '../../services/secure_storage/secure_storage.dart';
 
 import '../../constants/app_constants.dart';
+import '../../providers/api_key_provider.dart';
+import '../../providers/device_info_provider.dart';
+import '../../services/networking/web_api/user_api.dart';
+import '../../services/secure_storage/secure_storage.dart';
 import '../../utils/snackbar.dart';
 import '../components/custom_auth_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
 import '../components/custom_text_form_field.dart';
+import '../dashboard/dashboard_screen.dart';
+import '../signup/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

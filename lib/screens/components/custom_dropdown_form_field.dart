@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../constants/app_constants.dart';
 import 'custom_text.dart';
 
-
 class CustomDropdownFormField extends StatelessWidget {
   const CustomDropdownFormField({
     Key? key,
@@ -11,12 +10,14 @@ class CustomDropdownFormField extends StatelessWidget {
     required this.selectedItem,
     required this.hintText,
     this.fieldTitle,
+    this.validate,
   }) : super(key: key);
 
   final List<DropdownMenuItem<String>> items;
   final Function(String?) selectedItem;
   final String hintText;
   final String? fieldTitle;
+  final FormFieldValidator<String>? validate;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class CustomDropdownFormField extends StatelessWidget {
               borderSide: kLightBorderSide,
             ),
           ),
+          validator: validate,
         ),
       ],
     );

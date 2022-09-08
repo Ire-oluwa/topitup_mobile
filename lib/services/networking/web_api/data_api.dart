@@ -47,4 +47,30 @@ class DataApi {
     );
     return responseData;
   }
+
+    static Future<dynamic> buyAirtime({
+    required String productCode,
+    required String recipientPhoneNumber,
+    required int orderAmount,
+    required String apiKey,
+    required String deviceId,
+  }) async {
+    final responseData = await NetworkHelper.postRequest(
+      url: BaseUrl.getBaseUrl + EndpointDirectory.endpoint,
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(
+        <String, dynamic>{
+          'cmd': 'airtime',
+          'product_code': productCode,
+          'recipient_account_phone_iud': recipientPhoneNumber,
+          'order_amount': orderAmount,
+          'api_key': apiKey,
+          'device_id': deviceId,
+        },
+      ),
+    );
+    return responseData;
+  }
 }

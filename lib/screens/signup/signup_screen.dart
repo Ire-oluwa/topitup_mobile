@@ -7,10 +7,11 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
+
+import '../../constants/app_constants.dart';
 import '../../providers/device_info_provider.dart';
 import '../../services/networking/web_api/user_api.dart';
 import '../../utils/snackbar.dart';
-import '../../constants/app_constants.dart';
 import '../components/custom_auth_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
