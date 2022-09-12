@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../constants/app_constants.dart';
 import '../bottom_navigation/bottom_navigation_bar.dart';
-import '../cable/cable_screen.dart';
 import '../components/custom_text.dart';
 import 'components/custom_dashboard_feature_icon_card.dart';
 import 'components/dashboard_header_profile_details_section.dart';
 import 'components/dashboard_header_transaction_details_card.dart';
-import '../data/data_screen.dart';
 import '../electricity/electricity_screen.dart';
-import '../internet/internet_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -23,7 +21,6 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
   int _selectedIndex = 0;
 
   @override
@@ -37,6 +34,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: Divider.createBorderSide(
+                    context,
+                    color: kSecondaryColour,
+                    width: 1.0.w,
+                  ),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -61,25 +67,59 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                   const Spacer(),
                   const CustomText(
-                    text: 'My Account',
+                    text: 'My Profile',
                     textColor: kSecondaryColour,
                   ),
                 ],
               ),
             ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
+            SideNavBarMenu(
+              iconName: 'assets/svg/wallet-icon.svg',
+              label: 'Wallet',
+              onPressed: () {},
             ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
+            SideNavBarMenu(
+              iconName: 'assets/svg/wallet-funds-icon.svg',
+              label: 'Send wallet funds',
+              onPressed: () {},
+            ),
+            SideNavBarMenu(
+              iconName: 'assets/svg/services-icon.svg',
+              label: 'Services',
+              onPressed: () {},
+            ),
+            SideNavBarMenu(
+              iconName: 'assets/svg/transaction-icon.svg',
+              label: 'Transaction History',
+              onPressed: () {},
+            ),
+            Divider(
+              height: 1.h,
+              color: kSecondaryColour,
+              thickness: 1.0,
+            ),
+            SideNavBarMenu(
+              iconName: 'assets/svg/settings-icon.svg',
+              label: 'Settings',
+              onPressed: () {},
+            ),
+            SideNavBarMenu(
+              iconName: 'assets/svg/help-support-icon.svg',
+              label: 'Help & Support',
+              onPressed: () {},
+            ),
+            SideNavBarMenu(
+              iconName: 'assets/svg/about-icon.svg',
+              label: 'About',
+              onPressed: () {},
+            ),
+            SizedBox(
+              height: kDefaultPadding.h,
+            ),
+            SideNavBarMenu(
+              iconName: 'assets/svg/sign-out-icon .svg',
+              label: 'Sign Out',
+              onPressed: () {},
             ),
           ],
         ),
@@ -165,22 +205,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         CustomDashboardFeatureIconCard(
                           icon: 'assets/svg/airtime-icon.svg',
                           label: 'Buy Airtime',
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            DataScreen.id,
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacementNamed(
+                            BottomNavBar.data,
                           ),
                         ),
                         CustomDashboardFeatureIconCard(
                           icon: 'assets/svg/data-icon.svg',
                           label: 'Buy Data',
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            DataScreen.id,
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacementNamed(
+                            BottomNavBar.data,
                           ),
                         ),
                         CustomDashboardFeatureIconCard(
                           icon: 'assets/svg/internet-icon.svg',
                           label: 'Internet',
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            InternetScreen.id,
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacementNamed(
+                            BottomNavBar.internet,
                           ),
                         ),
                       ],
@@ -194,15 +237,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         CustomDashboardFeatureIconCard(
                           icon: 'assets/svg/cable-icon.svg',
                           label: 'Cable Tv',
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            CableScreen.id,
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacementNamed(
+                            BottomNavBar.cable,
                           ),
                         ),
                         CustomDashboardFeatureIconCard(
                           icon: 'assets/svg/electricity-icon.svg',
                           label: 'Pay Electric Bills',
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            ElectricityScreen.id,
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacementNamed(
+                            BottomNavBar.electricity,
                           ),
                         ),
                         CustomDashboardFeatureIconCard(
@@ -277,19 +322,54 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   _onItemTapped(BuildContext context, int index) {
-    setState(() {
-      _selectedIndex = index;
-      _selectedIndex == 0
-          ? Navigator.of(context).pushReplacementNamed(DashboardScreen.id)
-          : _selectedIndex == 1
-              ? Navigator.of(context).pushNamed(InternetScreen.id)
-              : _selectedIndex == 2
-                  ? Navigator.of(context).pushNamed(DataScreen.id)
-                  : _selectedIndex == 3
-                      ? Navigator.of(context).pushNamed(ElectricityScreen.id)
-                      : _selectedIndex == 4
-                          ? Navigator.of(context).pushNamed(CableScreen.id)
-                          : null;
-    });
+    _selectedIndex = index;
+    switch (_selectedIndex) {
+      case 0:
+        null;
+        break;
+      case 1:
+        Navigator.of(context).pushReplacementNamed(BottomNavBar.internet);
+        break;
+      case 2:
+        Navigator.of(context).pushReplacementNamed(BottomNavBar.data);
+        break;
+      case 3:
+        Navigator.of(context).pushReplacementNamed(BottomNavBar.electricity);
+        break;
+      case 4:
+        Navigator.of(context).pushReplacementNamed(BottomNavBar.cable);
+        break;
+      default:
+        return;
+    }
+  }
+}
+
+class SideNavBarMenu extends StatelessWidget {
+  const SideNavBarMenu({
+    Key? key,
+    required this.iconName,
+    required this.label,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final String iconName, label;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: SvgPicture.asset(
+        iconName,
+        width: kDefaultIconSize.w,
+        height: kDefaultIconSize.h,
+      ),
+      title: CustomText(
+        text: label,
+        textColor: kPrimaryColour,
+      ),
+      horizontalTitleGap: 1.w,
+      onTap: onPressed,
+    );
   }
 }
