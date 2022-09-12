@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'screens/bottom_navigation/bottom_navigation_bar.dart';
+import 'screens/transaction_response/transaction_response.dart';
 import 'providers/api_key_provider.dart';
 import 'screens/cable/cable_screen.dart';
 import 'screens/data/data_screen.dart';
@@ -75,17 +77,19 @@ class TopitupNg extends StatelessWidget {
           LoginScreen.id: (context) => const LoginScreen(),
           SignupScreen.id: (context) => const SignupScreen(),
           // BottomNavBar.home: (context) => const BottomNavBar(screenIndex: 0),
-          // BottomNavBar.internet: (context) =>
-          //     const BottomNavBar(screenIndex: 1),
-          // BottomNavBar.data: (context) => const BottomNavBar(screenIndex: 2),
-          // BottomNavBar.electricity: (context) =>
-          //     const BottomNavBar(screenIndex: 3),
-          // BottomNavBar.cable: (context) => const BottomNavBar(screenIndex: 4),
+          BottomNavBar.internet: (context) =>
+              const BottomNavBar(screenIndex: 1),
+          BottomNavBar.data: (context) => const BottomNavBar(screenIndex: 2),
+          BottomNavBar.electricity: (context) =>
+              const BottomNavBar(screenIndex: 3),
+          BottomNavBar.cable: (context) => const BottomNavBar(screenIndex: 4),
           DashboardScreen.id: (context) => const DashboardScreen(),
           InternetScreen.id: (context) => const InternetScreen(),
           DataScreen.id: (context) => const DataScreen(),
           ElectricityScreen.id: (context) => const ElectricityScreen(),
           CableScreen.id: (context) => const CableScreen(),
+          TransactionResponseScreen.id: (context) =>
+              const TransactionResponseScreen(),
         },
       ),
     );

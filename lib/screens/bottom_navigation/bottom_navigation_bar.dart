@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import '../dashboard/dashboard_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../cable/cable_screen.dart';
-import '../dashboard/dashboard_screen.dart';
 import '../data/data_screen.dart';
 import '../electricity/electricity_screen.dart';
 import '../internet/internet_screen.dart';
@@ -12,7 +12,6 @@ import '../internet/internet_screen.dart';
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.screenIndex}) : super(key: key);
 
-  static const String home = 'home navigation';
   static const String internet = 'internet navigation';
   static const String data = 'data navigation';
   static const String electricity = 'electricity navigation';
@@ -26,7 +25,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   final List<Widget> _screens = [
-    const DashboardScreen(),
+    Container(),
     const InternetScreen(),
     const DataScreen(),
     const ElectricityScreen(),
@@ -104,6 +103,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 
   _onItemTapped(int index) {
+    if (index == 0) {
+      Navigator.of(context).pushReplacementNamed(DashboardScreen.id);
+      return;
+    }
     setState(() {
       _selectedIndex = index;
     });

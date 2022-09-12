@@ -21,6 +21,7 @@ class NetworkProviderCardIcon extends StatelessWidget {
       onTap: onPressed,
       child: SizedBox(
         width: 100.w,
+        height: 100.h,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

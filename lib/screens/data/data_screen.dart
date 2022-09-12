@@ -42,8 +42,8 @@ class _DataScreenState extends State<DataScreen> {
   String _selectedService = '';
   bool _isLoading = false;
   bool _networkProviderIsSelected = false;
-  List<SubServiceModel> _subServices = [];
-  List<AvailableServiceModel> _availableServices = [];
+  final List<SubServiceModel> _subServices = [];
+  final List<AvailableServiceModel> _availableServices = [];
   final FlutterContactPicker _contactPicker = FlutterContactPicker();
 
   final _airtimeAndDataFormKey = GlobalKey<FormState>();
@@ -185,7 +185,7 @@ class _DataScreenState extends State<DataScreen> {
                                 _selectedService != "" &&
                                 _subServices.isNotEmpty)
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               CustomText(
                                 text: 'Select Network Provider',
@@ -426,7 +426,8 @@ class _DataScreenState extends State<DataScreen> {
           .toList();
       // print(loadedSubservices);
       setState(() {
-        _subServices = loadedSubservices;
+        _subServices.clear();
+        _subServices.addAll(loadedSubservices);
       });
       return;
     }
@@ -457,7 +458,8 @@ class _DataScreenState extends State<DataScreen> {
       // print(loadedAvailableServices.length);
       // print(loadedAvailableServices);
       setState(() {
-        _availableServices = loadedAvailableServices;
+        _availableServices.clear();
+        _availableServices.addAll(loadedAvailableServices);
         _networkProviderIsSelected = false;
       });
       return;
