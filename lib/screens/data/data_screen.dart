@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
+import '../../models/transaction_response.dart';
+import '../transaction_response/transaction_response_screen.dart';
 import '../../models/available_service.dart';
 import '../components/custom_dropdown_form_field.dart';
 import 'components/choose_airtime_amount_widget.dart';
@@ -85,7 +87,8 @@ class _DataScreenState extends State<DataScreen> {
                               onPressed: () => setState(() {
                                 _isAirtimeActive = !_isAirtimeActive;
                                 _isAirtimeActive
-                                    ? _selectedService = 'mobile_topup'
+                                    ? _selectedService =
+                                        MobileServices.airtime.getValue()
                                     : _selectedService = '';
                                 _isDataActive = false;
                                 _isAirtimeActive
@@ -132,7 +135,8 @@ class _DataScreenState extends State<DataScreen> {
                                 onPressed: () => setState(() {
                                   _isDataTopup = !_isDataTopup;
                                   _isDataTopup
-                                      ? _selectedService = 'data_topup'
+                                      ? _selectedService =
+                                          MobileServices.dataTopup.getValue()
                                       : _selectedService = '';
                                   _isDataShare = false;
                                   _isDataTopup
@@ -157,7 +161,8 @@ class _DataScreenState extends State<DataScreen> {
                                 onPressed: () => setState(() {
                                   _isDataShare = !_isDataShare;
                                   _isDataShare
-                                      ? _selectedService = 'sme_data_share'
+                                      ? _selectedService =
+                                          MobileServices.smeDataShare.getValue()
                                       : _selectedService = '';
                                   _isDataTopup = false;
                                   _isDataShare
@@ -219,13 +224,6 @@ class _DataScreenState extends State<DataScreen> {
                                                       ? 'assets/logos/9mobile.png'
                                                       : 'assets/logos/mtn.png',
                                           onPressed: () async {
-                                            // if (subService.name!
-                                            //     .contains('mtn')) {
-                                            //   setState(() {
-                                            //     _networkProviderIsSelected =
-                                            //         true;
-                                            //   });
-                                            // }
                                             setState(() {
                                               _networkProviderIsSelected = true;
                                               _availableServices.clear();
@@ -455,7 +453,6 @@ class _DataScreenState extends State<DataScreen> {
       List<AvailableServiceModel> loadedAvailableServices = data['data_result']
           .map<AvailableServiceModel>(AvailableServiceModel.fromJson)
           .toList();
-      // print(loadedAvailableServices.length);
       // print(loadedAvailableServices);
       setState(() {
         _availableServices.clear();
@@ -483,7 +480,19 @@ class _DataScreenState extends State<DataScreen> {
             displaySnackbar(context, 'Choose an amount!');
             return;
           }
-          await _buyAirtime(apiKey: apiKey, deviceId: deviceId);
+
+          if (_selectedService == MobileServices.airtime.getValue()) {
+            await _buyAirtime(apiKey: apiKey, deviceId: deviceId);
+            return;
+          }
+
+          if (_selectedService == MobileServices.dataTopup.getValue()) {
+            await _buyDirectData(apiKey: apiKey, deviceId: deviceId);
+            return;
+          }
+
+          await _buyDataShare(apiKey: apiKey, deviceId: deviceId);
+          return;
         }
         if (!mounted) return;
         displaySnackbar(context, 'Select a plan');
@@ -508,14 +517,76 @@ class _DataScreenState extends State<DataScreen> {
     if (res.statusCode == 200) {
       _makeLoadingFalse();
       final data = jsonDecode(res.body);
-      print(data);
+      final transactionResponse =
+          TransactionResponseModel.fromJson(data['data']);
       if (!mounted) return;
-      displaySnackbar(context, 'Transaction Submitted Successfully');
+      Navigator.of(context)
+          .pushNamed(TransactionResponseScreen.id, arguments: <String, dynamic>{
+        'type': 'Airtime',
+        'server_msg': data['server_message'],
+        'trx_details': transactionResponse
+      });
       return;
     }
     _makeLoadingFalse();
     if (!mounted) return;
-    displaySnackbar(context, 'Transaction Failed');
+    displaySnackbar(context, 'Error Occured! Try again later.');
+  }
+
+  Future<void> _buyDirectData(
+      {required String apiKey, required String deviceId}) async {
+    _makeLoadingTrue();
+    final res = await DataApi.buyDirectData(
+      productCode: _productCode,
+      apiKey: apiKey,
+      deviceId: deviceId,
+      recipientPhoneNumber: _mobileNumberController.text,
+    );
+    if (res.statusCode == 200) {
+      _makeLoadingFalse();
+      final data = jsonDecode(res.body);
+      final transactionResponse =
+          TransactionResponseModel.fromJson(data['data']);
+      if (!mounted) return;
+      Navigator.of(context)
+          .pushNamed(TransactionResponseScreen.id, arguments: <String, dynamic>{
+        'type': 'Data Topup',
+        'server_msg': data['server_message'],
+        'trx_details': transactionResponse
+      });
+      return;
+    }
+    _makeLoadingFalse();
+    if (!mounted) return;
+    displaySnackbar(context, 'Error Occured! Try again later.');
+  }
+
+  Future<void> _buyDataShare(
+      {required String apiKey, required String deviceId}) async {
+    _makeLoadingTrue();
+    final res = await DataApi.buyDataShare(
+      productCode: _productCode,
+      apiKey: apiKey,
+      deviceId: deviceId,
+      recipientPhoneNumber: _mobileNumberController.text,
+    );
+    if (res.statusCode == 200) {
+      _makeLoadingFalse();
+      final data = jsonDecode(res.body);
+      final transactionResponse =
+          TransactionResponseModel.fromJson(data['data']);
+      if (!mounted) return;
+      Navigator.of(context)
+          .pushNamed(TransactionResponseScreen.id, arguments: <String, dynamic>{
+        'type': 'Data Share',
+        'server_msg': data['server_message'],
+        'trx_details': transactionResponse
+      });
+      return;
+    }
+    _makeLoadingFalse();
+    if (!mounted) return;
+    displaySnackbar(context, 'Error Occured! Try again later.');
   }
 
   void _makeLoadingFalse() {
@@ -528,5 +599,22 @@ class _DataScreenState extends State<DataScreen> {
     setState(() {
       _isLoading = true;
     });
+  }
+}
+
+enum MobileServices { airtime, dataTopup, smeDataShare }
+
+extension Services on MobileServices {
+  String getValue() {
+    switch (this) {
+      case MobileServices.airtime:
+        return 'mobile_topup';
+      case MobileServices.dataTopup:
+        return 'data_topup';
+      case MobileServices.smeDataShare:
+        return 'sme_data_share';
+      default:
+        return '';
+    }
   }
 }

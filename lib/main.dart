@@ -2,31 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'screens/bottom_navigation/bottom_navigation_bar.dart';
-import 'screens/transaction_response/transaction_response.dart';
+
+import 'constants/app_constants.dart';
+import 'constants/palette.dart';
 import 'providers/api_key_provider.dart';
+import 'providers/device_info_provider.dart';
+import 'screens/bottom_navigation/bottom_navigation_bar.dart';
 import 'screens/cable/cable_screen.dart';
+import 'screens/dashboard/dashboard_screen.dart';
 import 'screens/data/data_screen.dart';
 import 'screens/electricity/electricity_screen.dart';
-import 'screens/internet/internet_screen.dart';
-import 'providers/device_info_provider.dart';
-import 'screens/dashboard/dashboard_screen.dart';
-
-import 'constants/palette.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/internet/internet_screen.dart';
 import 'screens/login/login_screen.dart';
 import 'screens/onboarding/onboarding_screen.dart';
 import 'screens/signup/signup_screen.dart';
 import 'screens/splash/splash_screen.dart';
+import 'screens/transaction_response/transaction_response_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   const SystemUiOverlayStyle(
-  //     statusBarColor: Colors.white,
-  //     statusBarIconBrightness: Brightness.dark,
-  //   ),
-  // );
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: kPrimaryColour,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
   runApp(
     MultiProvider(
       providers: [
