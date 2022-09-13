@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import '../dashboard/dashboard_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../cable/cable_screen.dart';
+import '../components/custom_bottom_navigation_icon.dart';
+import '../dashboard/dashboard_screen.dart';
 import '../data/data_screen.dart';
 import '../electricity/electricity_screen.dart';
 import '../internet/internet_screen.dart';
@@ -113,34 +112,4 @@ class _BottomNavBarState extends State<BottomNavBar> {
   }
 }
 
-class CustomBottomNavigationIcon extends StatelessWidget {
-  const CustomBottomNavigationIcon({
-    Key? key,
-    required this.iconName,
-    required this.iconColour,
-  }) : super(key: key);
 
-  final String iconName;
-  final Color iconColour;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(100),
-      child: Container(
-        height: 35.h,
-        width: 35.w,
-        color: Colors.white,
-        padding: EdgeInsets.all(
-          5.w,
-        ),
-        child: SvgPicture.asset(
-          iconName,
-          color: iconColour,
-          width: 18.w,
-          height: 18.h,
-        ),
-      ),
-    );
-  }
-}

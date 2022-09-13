@@ -1,37 +1,13 @@
 class TransactionResponseModel {
-  String? serverMessage;
-  bool? status;
-  int? errorCode;
-  String? textStatus;
-  TransactionResponseData? data;
-
-  TransactionResponseModel({
-    this.serverMessage,
-    this.status,
-    this.errorCode,
-    this.textStatus,
-    this.data,
-  });
-
-  static TransactionResponseModel fromJson(json) => TransactionResponseModel(
-        serverMessage: json['server_message'] as String?,
-        status: json['status'] as bool?,
-        errorCode: json['error_code'] as int?,
-        textStatus: json['text_status'] as String?,
-        data: json['data'] as TransactionResponseData?,
-      );
-}
-
-class TransactionResponseData {
   bool? status;
   String? serverMessage;
   int? rechargeId;
-  String? amountCharged;
-  String? afterBalance;
-  String? bonusEarned;
-  String? textStatus;
+  dynamic amountCharged;
+  dynamic afterBalance;
+  dynamic bonusEarned;
+  dynamic textStatus;
 
-  TransactionResponseData({
+  TransactionResponseModel({
     this.status,
     this.serverMessage,
     this.rechargeId,
@@ -41,13 +17,13 @@ class TransactionResponseData {
     this.textStatus,
   });
 
-  static TransactionResponseData fromJson(json) => TransactionResponseData(
+  static TransactionResponseModel fromJson(json) => TransactionResponseModel(
         status: json['status'] as bool?,
         serverMessage: json['server_message'] as String?,
         rechargeId: json['recharge_id'] as int?,
-        amountCharged: json['amount_charged'] as String?,
-        afterBalance: json['after_balance'] as String?,
-        bonusEarned: json['bonus_earned'] as String?,
-        textStatus: json['text_status'] as String?,
+        amountCharged: json['amount_charged'] as dynamic,
+        afterBalance: json['after_balance'] as dynamic,
+        bonusEarned: json['bonus_earned'] as dynamic,
+        textStatus: json['text_status'] as dynamic,
       );
 }
