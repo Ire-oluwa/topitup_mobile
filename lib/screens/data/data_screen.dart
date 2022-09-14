@@ -88,7 +88,7 @@ class _DataScreenState extends State<DataScreen> {
                                 _isAirtimeActive = !_isAirtimeActive;
                                 _isAirtimeActive
                                     ? _selectedService =
-                                        MobileServices.airtime.getValue()
+                                        MobileServices.airtime.title
                                     : _selectedService = '';
                                 _isDataActive = false;
                                 _isAirtimeActive
@@ -136,7 +136,7 @@ class _DataScreenState extends State<DataScreen> {
                                   _isDataTopup = !_isDataTopup;
                                   _isDataTopup
                                       ? _selectedService =
-                                          MobileServices.dataTopup.getValue()
+                                          MobileServices.dataTopup.title
                                       : _selectedService = '';
                                   _isDataShare = false;
                                   _isDataTopup
@@ -162,7 +162,7 @@ class _DataScreenState extends State<DataScreen> {
                                   _isDataShare = !_isDataShare;
                                   _isDataShare
                                       ? _selectedService =
-                                          MobileServices.smeDataShare.getValue()
+                                          MobileServices.smeDataShare.title
                                       : _selectedService = '';
                                   _isDataTopup = false;
                                   _isDataShare
@@ -425,6 +425,7 @@ class _DataScreenState extends State<DataScreen> {
       // print(loadedSubservices);
       setState(() {
         _subServices.clear();
+        _availableServices.clear();
         _subServices.addAll(loadedSubservices);
       });
       return;
@@ -481,12 +482,12 @@ class _DataScreenState extends State<DataScreen> {
             return;
           }
 
-          if (_selectedService == MobileServices.airtime.getValue()) {
+          if (_selectedService == MobileServices.airtime.title) {
             await _buyAirtime(apiKey: apiKey, deviceId: deviceId);
             return;
           }
 
-          if (_selectedService == MobileServices.dataTopup.getValue()) {
+          if (_selectedService == MobileServices.dataTopup.title) {
             await _buyDirectData(apiKey: apiKey, deviceId: deviceId);
             return;
           }
@@ -605,7 +606,7 @@ class _DataScreenState extends State<DataScreen> {
 enum MobileServices { airtime, dataTopup, smeDataShare }
 
 extension Services on MobileServices {
-  String getValue() {
+  String get title {
     switch (this) {
       case MobileServices.airtime:
         return 'mobile_topup';
