@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
@@ -128,9 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: kDefaultPadding.h,
                                   ),
                                   Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
                                       SizedBox(
                                         width: 120.w,
+                                        height: 50.h,
                                         child: CustomTextButton(
                                           text: 'Login',
                                           onPressed: () =>
@@ -143,14 +146,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                       SizedBox(
                                         width: 10.w,
                                       ),
-                                      GestureDetector(
-                                        onTap: () {},
-                                        child: const CustomText(
-                                          text: 'Forgot Password?',
-                                          textColor: kSecondaryColour,
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: SvgPicture.asset(
+                                          'assets/svg/biometric.svg',
                                         ),
                                       ),
                                     ],
+                                  ),
+                                  SizedBox(
+                                    height: kDefaultPadding.h,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {},
+                                    child: const CustomText(
+                                      text: 'Forgot Password?',
+                                      textColor: kSecondaryColour,
+                                    ),
                                   ),
                                   // SizedBox(
                                   //   height: 8.h,
