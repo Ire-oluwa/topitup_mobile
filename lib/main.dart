@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:topitup/screens/services/services_screen.dart';
 
 import 'constants/app_constants.dart';
 import 'constants/palette.dart';
@@ -91,6 +92,7 @@ class TopitupNg extends StatelessWidget {
           CableScreen.id: (context) => const CableScreen(),
           TransactionResponseScreen.id: (context) =>
               const TransactionResponseScreen(),
+          ServicesScreen.id: (context) => const ServicesScreen(),
         },
       ),
     );

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../constants/app_constants.dart';
-import '../../components/custom_text.dart';
+import '../../constants/app_constants.dart';
+import 'custom_text.dart';
 
 class CustomDashboardFeatureIconCard extends StatelessWidget {
   const CustomDashboardFeatureIconCard({
@@ -24,8 +24,8 @@ class CustomDashboardFeatureIconCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 80.h,
-              width: 80.w,
+              height: 75.h,
+              width: 75.w,
               child: Card(
                 elevation: 1,
                 shadowColor: kSecondaryColour,

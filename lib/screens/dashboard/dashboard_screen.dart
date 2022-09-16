@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:topitup/screens/services/services_screen.dart';
 import '../components/custom_bottom_navigation_icon.dart';
 import 'components/side_nav_bar_menu.dart';
 import '../../constants/app_constants.dart';
 import '../bottom_navigation/bottom_navigation_bar.dart';
 import '../components/custom_text.dart';
-import 'components/custom_dashboard_feature_icon_card.dart';
+import '../components/custom_dashboard_feature_icon_card.dart';
 import 'components/dashboard_header_profile_details_section.dart';
 import 'components/dashboard_header_transaction_details_card.dart';
-import '../electricity/electricity_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -87,7 +87,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SideNavBarMenu(
               iconName: 'assets/svg/services-icon.svg',
               label: 'Services',
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed(
+                ServicesScreen.id,
+              ),
             ),
             SideNavBarMenu(
               iconName: 'assets/svg/transaction-icon.svg',
@@ -176,12 +178,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                     Positioned(
-                      top: 150.h,
+                      top: 140.h,
                       left: 30.w,
                       right: 30.w,
                       child: Center(
                         child: SizedBox(
-                          width: size.width * 0.8,
+                          width: size.width * 0.75,
                           child: const DashboardHeaderTransactionDetailsCard(
                             walletAmount: '10,000,000',
                             cashbackAmount: '20.00',
@@ -194,7 +196,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
               SizedBox(
-                height: kDefaultPadding.h * 2,
+                height: kDefaultPadding.h + 10,
               ),
               Expanded(
                 child: Column(
@@ -255,7 +257,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           icon: 'assets/svg/others.svg',
                           label: 'Others',
                           onPressed: () => Navigator.of(context).pushNamed(
-                            ElectricityScreen.id,
+                            ServicesScreen.id,
                           ),
                         ),
                       ],
