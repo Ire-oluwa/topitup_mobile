@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:topitup/providers/tv_provider.dart';
+import 'package:topitup/providers/wallet_balance_provider.dart';
 import 'package:topitup/screens/services/services_screen.dart';
 
 import 'constants/app_constants.dart';
@@ -37,6 +39,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => ApiKey(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WalletBalance(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TvCable(),
         ),
       ],
       child: const TopitupNg(),

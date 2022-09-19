@@ -47,7 +47,7 @@ class _DataScreenState extends State<DataScreen> {
   final List<SubServiceModel> _subServices = [];
   final List<AvailableServiceModel> _availableServices = [];
   final FlutterContactPicker _contactPicker = FlutterContactPicker();
-
+  final _choosePlanSectionKey = GlobalKey();
   final _airtimeAndDataFormKey = GlobalKey<FormState>();
   final _mobileNumberController = TextEditingController();
 
@@ -311,47 +311,50 @@ class _DataScreenState extends State<DataScreen> {
                           height: kDefaultPadding.h,
                         ),
                         // if (_isAirtimeActive == false && _isDataActive)
-                        CustomDropdownFormField(
-                          items: _networkProviderIsSelected
-                              ? [
-                                  const DropdownMenuItem<String>(
-                                    value: 'none',
-                                    child: CustomText(
-                                      text: 'Select data-topup or data-share',
-                                      textColor: kPrimaryColour,
-                                      fontWeight: FontWeight.bold,
-                                      alignText: TextAlign.center,
-                                    ),
-                                  ),
-                                ]
-                              : _availableServices
-                                  .map(
-                                    (availableService) =>
-                                        DropdownMenuItem<String>(
-                                      value: availableService.systemName,
+                        Container(
+                          key: _choosePlanSectionKey,
+                          child: CustomDropdownFormField(
+                            items: _networkProviderIsSelected
+                                ? [
+                                    const DropdownMenuItem<String>(
+                                      value: 'none',
                                       child: CustomText(
-                                        text:
-                                            '${availableService.name!} (₦${availableService.defaultPrice})',
+                                        text: 'Select data-topup or data-share',
                                         textColor: kPrimaryColour,
                                         fontWeight: FontWeight.bold,
                                         alignText: TextAlign.center,
                                       ),
                                     ),
-                                  )
-                                  .toList(),
-                          selectedItem: (selectedItem) {
-                            final selectedPlan = _availableServices.firstWhere(
-                                (servize) =>
-                                    servize.systemName == selectedItem);
-                            setState(() {
-                              _productCode = selectedItem!;
-                              _paymentPrice = selectedPlan.defaultPrice!;
-                            });
-                          },
-                          hintText: _networkProviderIsSelected
-                              ? 'Loading...'
-                              : 'Choose Plan',
-                          // validate: kRequiredField,
+                                  ]
+                                : _availableServices
+                                    .map(
+                                      (availableService) =>
+                                          DropdownMenuItem<String>(
+                                        value: availableService.systemName,
+                                        child: CustomText(
+                                          text:
+                                              '${availableService.name!} (₦${availableService.defaultPrice})',
+                                          textColor: kPrimaryColour,
+                                          fontWeight: FontWeight.bold,
+                                          alignText: TextAlign.center,
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                            selectedItem: (selectedItem) {
+                              final selectedPlan =
+                                  _availableServices.firstWhere((servize) =>
+                                      servize.systemName == selectedItem);
+                              setState(() {
+                                _productCode = selectedItem!;
+                                _paymentPrice = selectedPlan.defaultPrice!;
+                              });
+                            },
+                            hintText: _networkProviderIsSelected
+                                ? 'Loading...'
+                                : 'Choose Plan',
+                            // validate: kRequiredField,
+                          ),
                         ),
                         if (_isDataActive == false)
                           SizedBox(
@@ -460,6 +463,10 @@ class _DataScreenState extends State<DataScreen> {
         _availableServices.addAll(loadedAvailableServices);
         _networkProviderIsSelected = false;
       });
+      if (_availableServices.isNotEmpty) {
+        _scrollToItem();
+        return;
+      }
       return;
     }
     _makeLoadingFalse();
@@ -468,6 +475,11 @@ class _DataScreenState extends State<DataScreen> {
       context,
       'Error occured! Try again later.',
     );
+  }
+
+  Future _scrollToItem() async {
+    final context = _choosePlanSectionKey.currentContext!;
+    await Scrollable.ensureVisible(context);
   }
 
   void _submitPayment(BuildContext context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:topitup/screens/dashboard/dashboard_screen.dart';
 import '../../constants/app_constants.dart';
 import 'custom_text.dart';
 
@@ -30,15 +31,36 @@ class CustomScreenBackground extends StatelessWidget {
             child: Container(
               height: size.height * 0.18,
               color: kPrimaryColour,
-              child: Center(
-                child: CustomText(
-                  text: screenName,
-                  textSize: 18.0.sp,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Montserrat',
-                  textColor: Colors.white,
-                  alignText: TextAlign.center,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_sharp,
+                        color: Colors.white,
+                      ),
+                      onPressed: () =>
+                          Navigator.of(context).pushReplacementNamed(
+                        DashboardScreen.id,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: kDefaultPadding.h,
+                  ),
+                  Center(
+                    child: CustomText(
+                      text: screenName,
+                      textSize: 18.0.sp,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Montserrat',
+                      textColor: Colors.white,
+                      alignText: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

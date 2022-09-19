@@ -40,7 +40,7 @@ class NetworkProviderCardIcon extends StatelessWidget {
                 ),
                 child: Image.asset(
                   networkProviderLogo,
-                  width: isSelected ? 65.w : 55.w,
+                  width: isSelected ? 60.w : 50.w,
                   height: isSelected ? 65.h : 55.h,
                 ),
               ),

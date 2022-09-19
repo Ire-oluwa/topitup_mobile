@@ -1,7 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:topitup/models/wallet_balance.dart';
+import 'package:topitup/providers/api_key_provider.dart';
+import 'package:topitup/providers/device_info_provider.dart';
+import 'package:topitup/providers/wallet_balance_provider.dart';
 import 'package:topitup/screens/services/services_screen.dart';
+import 'package:topitup/services/networking/web_api/wallet_balance_api.dart';
+import 'package:topitup/utils/snackbar.dart';
 import '../components/custom_bottom_navigation_icon.dart';
 import 'components/side_nav_bar_menu.dart';
 import '../../constants/app_constants.dart';
@@ -23,6 +32,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   int _selectedIndex = 0;
+  // String walletBalance = '0.00';
+  // String cashBackBalance = '0.00';
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +113,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               thickness: 1.0,
             ),
             SideNavBarMenu(
-              iconName: 'assets/svg/settings-icon.svg',
+              iconName: 'assets/svg/setting-icon.svg',
               label: 'Settings',
               onPressed: () {},
             ),
@@ -149,12 +160,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: size.height * 0.40,
+                height: size.height * 0.38,
                 child: Stack(
                   children: [
                     Container(
                       color: kPrimaryColour,
-                      height: size.height * 0.20,
+                      height: size.height * 0.18,
                       padding: EdgeInsets.all(1.0.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -178,15 +189,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     ),
                     Positioned(
-                      top: 140.h,
+                      top: 120.h,
                       left: 30.w,
                       right: 30.w,
                       child: Center(
                         child: SizedBox(
                           width: size.width * 0.75,
-                          child: const DashboardHeaderTransactionDetailsCard(
-                            walletAmount: '10,000,000',
-                            cashbackAmount: '20.00',
+                          child: DashboardHeaderTransactionDetailsCard(
+                            walletAmount:
+                                '${context.watch<WalletBalance>().walletBalance}',
+                            cashbackAmount:
+                                '${context.watch<WalletBalance>().cashBackBalance}',
                             voucherAmount: '0',
                           ),
                         ),
@@ -264,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -324,6 +337,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
+  @override
+  void didChangeDependencies() {
+    _getWalletBalance(
+      context: context,
+      apiKey: context.read<ApiKey>().getApiKey,
+      deviceId: context.read<DeviceInfo>().getDeviceId,
+    );
+    super.didChangeDependencies();
+  }
+
   _onItemTapped(BuildContext context, int index) {
     _selectedIndex = index;
     switch (_selectedIndex) {
@@ -345,5 +368,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
       default:
         return;
     }
+  }
+
+  void _getWalletBalance(
+      {required BuildContext context,
+      required String apiKey,
+      required String deviceId}) async {
+    final res = await WalletBalanceApi.getWalletBance(
+        apiKey: apiKey, deviceId: deviceId);
+
+    if (res.statusCode == 200) {
+      final data = jsonDecode(res.body);
+      final balance = WalletBalanceModel.fromJson(data);
+      setState(() {
+        context.read<WalletBalance>().setWalletBalance =
+            double.parse(balance.walletBalance ?? '0.0');
+        context.read<WalletBalance>().setCashBackBalance =
+            double.parse(balance.bonusBalance ?? '0.0');
+      });
+      return;
+    }
+    if (!mounted) return;
+    displaySnackbar(
+      context,
+      'Error occured! Refresh Wallet.',
+    );
   }
 }

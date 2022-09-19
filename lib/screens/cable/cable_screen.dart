@@ -10,6 +10,7 @@ import 'package:topitup/models/sub_service.dart';
 import 'package:topitup/models/transaction_response.dart';
 import 'package:topitup/providers/api_key_provider.dart';
 import 'package:topitup/providers/device_info_provider.dart';
+import 'package:topitup/providers/tv_provider.dart';
 import 'package:topitup/screens/components/custom_dropdown_form_field.dart';
 import 'package:topitup/screens/components/custom_screen_background.dart';
 import 'package:topitup/screens/components/custom_text.dart';
@@ -34,18 +35,11 @@ class _CableScreenState extends State<CableScreen> {
   bool _isLoading = false;
   final _smartCardNumberController = TextEditingController();
   final _cableTvFormKey = GlobalKey<FormState>();
-
-  late final List<SubServiceModel> _tvCables = [];
   final List<AvailableServiceModel> _availableServices = [];
-
-  List<DropdownMenuItem<String>> packages = [
-    const DropdownMenuItem(value: 'dstv', child: Text('DSTV')),
-    const DropdownMenuItem(value: 'startimes', child: Text('Startimes')),
-    const DropdownMenuItem(value: 'gotv', child: Text('Go tv')),
-  ];
 
   @override
   Widget build(BuildContext context) {
+    final tvCables = context.watch<TvCable>().tvCables;
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
@@ -75,7 +69,7 @@ class _CableScreenState extends State<CableScreen> {
                           height: 5.h,
                         ),
                         CustomDropdownFormField(
-                          items: _tvCables
+                          items: tvCables
                               .map(
                                 (tvCable) => DropdownMenuItem(
                                   value: tvCable.code,
@@ -96,7 +90,7 @@ class _CableScreenState extends State<CableScreen> {
                               deviceId: context.read<DeviceInfo>().getDeviceId,
                             );
                           },
-                          hintText: _tvCables.isEmpty
+                          hintText: tvCables.isEmpty
                               ? 'Loading...'
                               : 'Select provider',
                           validate: kRequiredField,
@@ -187,11 +181,13 @@ class _CableScreenState extends State<CableScreen> {
   }
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     _getCableSubscriptions(
-        apiKey: context.read<ApiKey>().getApiKey,
-        deviceId: context.read<DeviceInfo>().getDeviceId);
-    super.initState();
+      context: context,
+      apiKey: context.read<ApiKey>().getApiKey,
+      deviceId: context.read<DeviceInfo>().getDeviceId,
+    );
+    super.didChangeDependencies();
   }
 
   @override
@@ -201,7 +197,9 @@ class _CableScreenState extends State<CableScreen> {
   }
 
   Future<void> _getCableSubscriptions(
-      {required String apiKey, required String deviceId}) async {
+      {required BuildContext context,
+      required String apiKey,
+      required String deviceId}) async {
     final res =
         await CableApi.getSubServices(apiKey: apiKey, deviceId: deviceId);
 
@@ -213,9 +211,8 @@ class _CableScreenState extends State<CableScreen> {
           .toList();
       // print(loadedSubservices);
       setState(() {
-        _tvCables.clear();
         _availableServices.clear();
-        _tvCables.addAll(loadedSubservices);
+        context.read<TvCable>().setTvCables = loadedSubservices;
       });
       return;
     }

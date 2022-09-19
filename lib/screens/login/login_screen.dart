@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -274,8 +274,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
+      print(data);
       if (data['status'] == 1) {
-        print(data['api_key']);
+        // print(data['api_key']);
         if (!mounted) return;
         SecureStorage.setUserApiKey(data['api_key']);
         context.read<ApiKey>().apiKey = data['api_key'];

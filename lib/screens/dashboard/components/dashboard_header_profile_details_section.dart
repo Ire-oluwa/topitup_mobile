@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants/app_constants.dart';
 import '../../components/custom_text.dart';
 
 class DashboardHeaderProfileDetailsSection extends StatelessWidget {
@@ -16,34 +15,34 @@ class DashboardHeaderProfileDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomText(
-          text: 'Good afternoon\n$userFirstName,',
+          text: 'Welcome back, $userFirstName',
           textSize: 20.sp,
           textColor: Colors.white,
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.w200,
         ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(
-            100.0,
-          ),
-          child: Container(
-            color: Colors.white.withOpacity(
-              0.3,
-            ),
-            padding: const EdgeInsets.all(
-              5.0,
-            ),
-            child: CircleAvatar(
-              backgroundImage: AssetImage(
-                userProfileImage,
-              ),
-              radius: kDefaultPadding.w * 1.5,
-            ),
-          ),
-        )
+        // ClipRRect(
+        //   borderRadius: BorderRadius.circular(
+        //     100.0,
+        //   ),
+        //   child: Container(
+        //     color: Colors.white.withOpacity(
+        //       0.3,
+        //     ),
+        //     padding: const EdgeInsets.all(
+        //       5.0,
+        //     ),
+        //     child: CircleAvatar(
+        //       backgroundImage: AssetImage(
+        //         userProfileImage,
+        //       ),
+        //       radius: kDefaultPadding.w * 1.5,
+        //     ),
+        //   ),
+        // )
       ],
     );
   }
