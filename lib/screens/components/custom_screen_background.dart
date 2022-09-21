@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:topitup/screens/dashboard/dashboard_screen.dart';
+import '../dashboard/dashboard_screen.dart';
 import '../../constants/app_constants.dart';
 import 'custom_text.dart';
 

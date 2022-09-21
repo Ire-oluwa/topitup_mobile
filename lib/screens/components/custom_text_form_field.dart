@@ -10,7 +10,7 @@ class CustomTextFormField extends StatelessWidget {
     this.placeholder,
     required this.keyboardType,
     required this.inputAction,
-    required this.validate,
+    this.validate,
     this.enabled,
     this.obscureText = false,
     this.textCapitalization = TextCapitalization.sentences,
@@ -21,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final String? placeholder;
   final TextInputType keyboardType;
   final TextInputAction inputAction;
-  final FormFieldValidator<String> validate;
+  final FormFieldValidator<String>? validate;
   final bool? enabled;
   final bool obscureText;
   final TextCapitalization textCapitalization;

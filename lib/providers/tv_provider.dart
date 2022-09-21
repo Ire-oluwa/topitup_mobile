@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:topitup/models/sub_service.dart';
+
+import '../models/sub_service.dart';
 
 class TvCable with ChangeNotifier {
   List<SubServiceModel> _tvCables = [];

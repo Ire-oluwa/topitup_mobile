@@ -276,15 +276,23 @@ class _LoginScreenState extends State<LoginScreen> {
       final data = jsonDecode(res.body);
       print(data);
       if (data['status'] == 1) {
-        // print(data['api_key']);
-        if (!mounted) return;
-        SecureStorage.setUserApiKey(data['api_key']);
-        context.read<ApiKey>().apiKey = data['api_key'];
+        if (data['api_key'] != "") {
+          if (!mounted) return;
+          SecureStorage.setUserApiKey(data['api_key']);
+          context.read<ApiKey>().apiKey = data['api_key'];
+          _makeLoadingFalse();
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            DashboardScreen.id,
+            (route) => false,
+            arguments: data['name'],
+          );
+          return;
+        }
         _makeLoadingFalse();
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          DashboardScreen.id,
-          (route) => false,
-          arguments: data['name'],
+        if (!mounted) return;
+        displaySnackbar(
+          context,
+          'Login Not Successful.',
         );
         return;
       }

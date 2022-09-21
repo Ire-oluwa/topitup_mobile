@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:topitup/constants/api_endpoints.dart';
-import 'package:topitup/services/networking/network_helper.dart';
+import '../../../constants/api_endpoints.dart';
+import '../network_helper.dart';
 
 class CableApi {
   static Future<dynamic> getSubServices({

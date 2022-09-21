@@ -1,15 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart'
+    as contact_picker;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
+import 'package:topitup/providers/wallet_balance_provider.dart';
+import 'package:topitup/screens/components/custom_dropdown_form_field.dart';
+import 'package:topitup/screens/components/custom_text_form_field.dart';
+import 'package:topitup/screens/dashboard/dashboard_screen.dart';
+import 'package:topitup/utils/dialogs.dart';
 import '../../models/transaction_response.dart';
 import '../transaction_response/transaction_response_screen.dart';
 import '../../models/available_service.dart';
-import '../components/custom_dropdown_form_field.dart';
 import 'components/choose_airtime_amount_widget.dart';
 import '../../utils/snackbar.dart';
 import '../../constants/app_constants.dart';
@@ -19,7 +24,6 @@ import '../../providers/device_info_provider.dart';
 import '../components/custom_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
-import '../components/custom_text_form_field.dart';
 import 'components/network_provider_card_icon.dart';
 import 'components/service_type_card.dart';
 import 'components/sub_service_type_card.dart';
@@ -36,17 +40,19 @@ class DataScreen extends StatefulWidget {
 
 class _DataScreenState extends State<DataScreen> {
   String _paymentPrice = '0.00';
-  String _productCode = '';
+  String _productCode = 'none';
   bool _isAirtimeActive = false;
   bool _isDataActive = false;
   bool _isDataTopup = false;
   bool _isDataShare = false;
   String _selectedService = '';
   bool _isLoading = false;
-  bool _networkProviderIsSelected = false;
   final List<SubServiceModel> _subServices = [];
-  final List<AvailableServiceModel> _availableServices = [];
-  final FlutterContactPicker _contactPicker = FlutterContactPicker();
+  List<AvailableServiceModel> _availableServices = [
+    AvailableServiceModel(systemName: 'none', name: 'Choose Plan')
+  ];
+  final contact_picker.FlutterContactPicker _contactPicker =
+      contact_picker.FlutterContactPicker();
   final _choosePlanSectionKey = GlobalKey();
   final _airtimeAndDataFormKey = GlobalKey<FormState>();
   final _mobileNumberController = TextEditingController();
@@ -211,8 +217,6 @@ class _DataScreenState extends State<DataScreen> {
                                   children: _subServices
                                       .map(
                                         (subService) => NetworkProviderCardIcon(
-                                          isSelected:
-                                              _networkProviderIsSelected,
                                           serviceName: subService.name!,
                                           networkProviderLogo: subService.code!
                                                   .contains('airtel')
@@ -224,10 +228,6 @@ class _DataScreenState extends State<DataScreen> {
                                                       ? 'assets/logos/9mobile.png'
                                                       : 'assets/logos/mtn.png',
                                           onPressed: () async {
-                                            setState(() {
-                                              _networkProviderIsSelected = true;
-                                              _availableServices.clear();
-                                            });
                                             await _getAvailableServices(
                                               apiKey: context
                                                   .read<ApiKey>()
@@ -275,7 +275,7 @@ class _DataScreenState extends State<DataScreen> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                Contact? selectedContact =
+                                contact_picker.Contact? selectedContact =
                                     await _contactPicker.selectContact();
                                 if (selectedContact == null) {
                                   if (!mounted) return;
@@ -283,11 +283,14 @@ class _DataScreenState extends State<DataScreen> {
                                       context, 'No contact selected.');
                                   return;
                                 }
-                                final gottenContact =
-                                    selectedContact.toString();
+                                final gottenContact = selectedContact
+                                    .toString()
+                                    .replaceAll(RegExp(r'[^0-9]'), '');
+                                final formarttedNum = gottenContact
+                                    .substring(gottenContact.length - 10);
                                 setState(() {
-                                  _mobileNumberController.text = gottenContact
-                                      .replaceAll(RegExp(r'[^0-9]'), '');
+                                  _mobileNumberController.text =
+                                      '0$formarttedNum';
                                 });
                               },
                               child: Card(
@@ -311,50 +314,37 @@ class _DataScreenState extends State<DataScreen> {
                           height: kDefaultPadding.h,
                         ),
                         // if (_isAirtimeActive == false && _isDataActive)
+                        CustomDropdownFormField(
+                          selectedValue: _productCode,
+                          items: _availableServices
+                              .map(
+                                (availableService) => DropdownMenuItem<String>(
+                                  value: availableService.systemName,
+                                  child: FittedBox(
+                                    child: CustomText(
+                                      text: '${availableService.name}',
+                                      textColor: kPrimaryColour,
+                                      fontWeight: FontWeight.bold,
+                                      textSize: 13.sp,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          selectedItem: (selectedItem) {
+                            final selectedPlan = _availableServices.firstWhere(
+                                (servize) =>
+                                    servize.systemName == selectedItem);
+                            setState(() {
+                              _productCode = selectedItem!;
+                              _paymentPrice =
+                                  selectedPlan.defaultPrice ?? '0.00';
+                            });
+                          },
+                          hintText: 'Choose Plan',
+                        ),
                         Container(
                           key: _choosePlanSectionKey,
-                          child: CustomDropdownFormField(
-                            items: _networkProviderIsSelected
-                                ? [
-                                    const DropdownMenuItem<String>(
-                                      value: 'none',
-                                      child: CustomText(
-                                        text: 'Select data-topup or data-share',
-                                        textColor: kPrimaryColour,
-                                        fontWeight: FontWeight.bold,
-                                        alignText: TextAlign.center,
-                                      ),
-                                    ),
-                                  ]
-                                : _availableServices
-                                    .map(
-                                      (availableService) =>
-                                          DropdownMenuItem<String>(
-                                        value: availableService.systemName,
-                                        child: CustomText(
-                                          text:
-                                              '${availableService.name!} (₦${availableService.defaultPrice})',
-                                          textColor: kPrimaryColour,
-                                          fontWeight: FontWeight.bold,
-                                          alignText: TextAlign.center,
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                            selectedItem: (selectedItem) {
-                              final selectedPlan =
-                                  _availableServices.firstWhere((servize) =>
-                                      servize.systemName == selectedItem);
-                              setState(() {
-                                _productCode = selectedItem!;
-                                _paymentPrice = selectedPlan.defaultPrice!;
-                              });
-                            },
-                            hintText: _networkProviderIsSelected
-                                ? 'Loading...'
-                                : 'Choose Plan',
-                            // validate: kRequiredField,
-                          ),
                         ),
                         if (_isDataActive == false)
                           SizedBox(
@@ -429,6 +419,9 @@ class _DataScreenState extends State<DataScreen> {
       setState(() {
         _subServices.clear();
         _availableServices.clear();
+        _availableServices = [
+          AvailableServiceModel(systemName: 'none', name: 'Choose Plan')
+        ];
         _subServices.addAll(loadedSubservices);
       });
       return;
@@ -460,8 +453,10 @@ class _DataScreenState extends State<DataScreen> {
       // print(loadedAvailableServices);
       setState(() {
         _availableServices.clear();
+        _availableServices = [
+          AvailableServiceModel(systemName: 'none', name: 'Choose Plan')
+        ];
         _availableServices.addAll(loadedAvailableServices);
-        _networkProviderIsSelected = false;
       });
       if (_availableServices.isNotEmpty) {
         _scrollToItem();
@@ -486,11 +481,22 @@ class _DataScreenState extends State<DataScreen> {
       {required String apiKey, required String deviceId}) async {
     if (_selectedService != "") {
       if (_airtimeAndDataFormKey.currentState!.validate()) {
-        if (_productCode != '') {
+        if (_productCode != '' && _productCode != 'none') {
           if (_paymentPrice == '0.00' ||
               _paymentPrice == '0.0' ||
               _paymentPrice == '0') {
             displaySnackbar(context, 'Choose an amount!');
+            return;
+          }
+
+          final walletBalance = context.read<WalletBalance>().walletBalance;
+          if (double.parse(_paymentPrice) > walletBalance) {
+            displayInsufficientWallentBalanceDialog(
+              context,
+              refresh: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  DashboardScreen.id, (route) => false),
+              topUp: () {},
+            );
             return;
           }
 
@@ -508,13 +514,13 @@ class _DataScreenState extends State<DataScreen> {
           return;
         }
         if (!mounted) return;
-        displaySnackbar(context, 'Select a plan');
+        displaySnackbar(context, 'Select a plan!');
         return;
       }
-      displaySnackbar(context, 'Enter your mobile number!');
+      displaySnackbar(context, 'Enter your valid mobile number!');
       return;
     }
-    displaySnackbar(context, 'Select a service');
+    displaySnackbar(context, 'Select a service!');
   }
 
   Future<void> _buyAirtime(
@@ -601,6 +607,34 @@ class _DataScreenState extends State<DataScreen> {
     if (!mounted) return;
     displaySnackbar(context, 'Error Occured! Try again later.');
   }
+
+  // void _getWalletBalance(BuildContext context,
+  //     {required String apiKey, required String deviceId}) async {
+  //   _makeLoadingTrue();
+  //   final res = await WalletBalanceApi.getWalletBance(
+  //       apiKey: apiKey, deviceId: deviceId);
+
+  //   if (res.statusCode == 200) {
+  //     _makeLoadingFalse();
+  //     final data = jsonDecode(res.body);
+  //     final balance = WalletBalanceModel.fromJson(data);
+  //     setState(() {
+  //       context.read<WalletBalance>().setWalletBalance =
+  //           double.parse(balance.walletBalance ?? '0.0');
+  //       context.read<WalletBalance>().setCashBackBalance =
+  //           double.parse(balance.bonusBalance ?? '0.0');
+  //     });
+  //     if (!mounted) return;
+  //     Navigator.of(context).pop();
+  //     return;
+  //   }
+  //   _makeLoadingFalse();
+  //   if (!mounted) return;
+  //   displaySnackbar(
+  //     context,
+  //     'Error occured! Refresh Wallet.',
+  //   );
+  // }
 
   void _makeLoadingFalse() {
     setState(() {

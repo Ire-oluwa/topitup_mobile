@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/models/wallet_balance.dart';
-import 'package:topitup/providers/api_key_provider.dart';
-import 'package:topitup/providers/device_info_provider.dart';
-import 'package:topitup/providers/wallet_balance_provider.dart';
-import 'package:topitup/screens/services/services_screen.dart';
-import 'package:topitup/services/networking/web_api/wallet_balance_api.dart';
-import 'package:topitup/utils/snackbar.dart';
+import '../history/transaction_history_screen.dart';
+import '../../models/wallet_balance.dart';
+import '../../providers/api_key_provider.dart';
+import '../../providers/device_info_provider.dart';
+import '../../providers/wallet_balance_provider.dart';
+import '../services/services_screen.dart';
+import '../../services/networking/web_api/wallet_balance_api.dart';
+import '../../utils/snackbar.dart';
 import '../components/custom_bottom_navigation_icon.dart';
 import 'components/side_nav_bar_menu.dart';
 import '../../constants/app_constants.dart';
@@ -105,7 +106,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SideNavBarMenu(
               iconName: 'assets/svg/transaction-icon.svg',
               label: 'Transaction History',
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed(
+                TransactionHistoryScreen.id,
+              ),
             ),
             Divider(
               height: 1.h,
@@ -340,7 +343,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void didChangeDependencies() {
     _getWalletBalance(
-      context: context,
+      context,
       apiKey: context.read<ApiKey>().getApiKey,
       deviceId: context.read<DeviceInfo>().getDeviceId,
     );
@@ -370,10 +373,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  void _getWalletBalance(
-      {required BuildContext context,
-      required String apiKey,
-      required String deviceId}) async {
+  void _getWalletBalance(BuildContext context,
+      {required String apiKey, required String deviceId}) async {
     final res = await WalletBalanceApi.getWalletBance(
         apiKey: apiKey, deviceId: deviceId);
 
