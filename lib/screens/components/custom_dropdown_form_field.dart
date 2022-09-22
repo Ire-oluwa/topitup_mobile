@@ -11,23 +11,23 @@ class CustomDropdownFormField extends StatelessWidget {
     required this.selectedItem,
     required this.hintText,
     this.fieldTitle,
-    this.validate,
+    this.validate, this.selectedValue,
   }) : super(key: key);
 
   final List<DropdownMenuItem<String>> items;
   final Function(String?) selectedItem;
   final String hintText;
-  final String? fieldTitle;
+  final String? fieldTitle, selectedValue;
   final FormFieldValidator<String>? validate;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         fieldTitle != null
             ? CustomText(
-                text: fieldTitle!,
+                text: fieldTitle ?? '',
                 fontFamily: 'Montserrat',
                 textSize: 12.0.sp,
                 fontWeight: FontWeight.w500,
@@ -38,19 +38,24 @@ class CustomDropdownFormField extends StatelessWidget {
                 height: 5.h,
               )
             : Container(),
-        DropdownButtonFormField<String>(
-          items: items,
-          onChanged: selectedItem,
-          decoration: kDropdownFieldDecoration.copyWith(
-            hintText: hintText,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(
-                5.0,
+        SizedBox(
+          width: double.infinity,
+          height: 50.h,
+          child: DropdownButtonFormField<String>(
+            value: selectedValue,
+            items: items,
+            onChanged: selectedItem,
+            decoration: kDropdownFieldDecoration.copyWith(
+              hintText: hintText,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(
+                  5.0,
+                ),
+                borderSide: kLightBorderSide,
               ),
-              borderSide: kLightBorderSide,
             ),
+            validator: validate,
           ),
-          validator: validate,
         ),
       ],
     );

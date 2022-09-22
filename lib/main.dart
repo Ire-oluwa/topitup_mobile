@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:topitup/screens/services/services_screen.dart';
+import 'screens/history/transaction_history_screen.dart';
+import 'providers/tv_provider.dart';
+import 'providers/wallet_balance_provider.dart';
+import 'screens/services/services_screen.dart';
 
 import 'constants/app_constants.dart';
 import 'constants/palette.dart';
@@ -37,6 +40,12 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => ApiKey(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => WalletBalance(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TvCable(),
         ),
       ],
       child: const TopitupNg(),
@@ -93,6 +102,8 @@ class TopitupNg extends StatelessWidget {
           TransactionResponseScreen.id: (context) =>
               const TransactionResponseScreen(),
           ServicesScreen.id: (context) => const ServicesScreen(),
+          TransactionHistoryScreen.id: (context) =>
+              const TransactionHistoryScreen(),
         },
       ),
     );

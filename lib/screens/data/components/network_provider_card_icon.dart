@@ -9,12 +9,10 @@ class NetworkProviderCardIcon extends StatelessWidget {
     required this.networkProviderLogo,
     required this.onPressed,
     required this.serviceName,
-    this.isSelected = false,
   }) : super(key: key);
 
   final String networkProviderLogo, serviceName;
   final Function() onPressed;
-  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class NetworkProviderCardIcon extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Card(
-              elevation: isSelected ? 8 : 3,
+              elevation: 3,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(
                   100,
@@ -40,8 +38,8 @@ class NetworkProviderCardIcon extends StatelessWidget {
                 ),
                 child: Image.asset(
                   networkProviderLogo,
-                  width: isSelected ? 65.w : 55.w,
-                  height: isSelected ? 65.h : 55.h,
+                  width: 50.w,
+                  height: 55.h,
                 ),
               ),
             ),

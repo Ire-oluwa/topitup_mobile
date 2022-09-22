@@ -31,7 +31,7 @@ class CustomDashboardFeatureIconCard extends StatelessWidget {
                 shadowColor: kSecondaryColour,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(
-                    20,
+                    15,
                   ),
                 ),
                 color: kSecondaryColour,

@@ -21,8 +21,8 @@ class SideNavBarMenu extends StatelessWidget {
     return ListTile(
       leading: SvgPicture.asset(
         iconName,
-        width: kDefaultIconSize.w,
-        height: kDefaultIconSize.h,
+        width: kDefaultIconSize.w + 10,
+        height: kDefaultIconSize.h + 10,
       ),
       title: CustomText(
         text: label,

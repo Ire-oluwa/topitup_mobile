@@ -14,6 +14,8 @@ PODS:
     - Flutter
     - libphonenumber
     - libPhoneNumber-iOS
+  - local_auth_ios (0.0.1):
+    - Flutter
   - platform_device_id (0.0.1):
     - Flutter
   - shared_preferences_ios (0.0.1):
@@ -26,6 +28,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - libphonenumber (from `.symlinks/plugins/libphonenumber/ios`)
   - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
+  - local_auth_ios (from `.symlinks/plugins/local_auth_ios/ios`)
   - platform_device_id (from `.symlinks/plugins/platform_device_id/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
 
@@ -46,6 +49,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/libphonenumber/ios"
   libphonenumber_plugin:
     :path: ".symlinks/plugins/libphonenumber_plugin/ios"
+  local_auth_ios:
+    :path: ".symlinks/plugins/local_auth_ios/ios"
   platform_device_id:
     :path: ".symlinks/plugins/platform_device_id/ios"
   shared_preferences_ios:
@@ -59,6 +64,7 @@ SPEC CHECKSUMS:
   libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
   libphonenumber_plugin: 7cf755ad1656145935d6c208173a476bd3f12898
+  local_auth_ios: 0d333dde7780f669e66f19d2ff6005f3ea84008d
   platform_device_id: 81b3e2993881f87d0c82ef151dc274df4869aef5
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
 
