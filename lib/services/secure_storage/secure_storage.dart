@@ -15,4 +15,30 @@ class SecureStorage {
   static void deleteUserApiKey() async {
     await _storage.delete(key: 'apiKey');
   }
+
+  static void setLoginUsername(String userName) async {
+    await _storage.write(key: 'loginUserName', value: userName);
+  }
+
+  static Future<String?> currentLoginUsername() async {
+    final value = await _storage.read(key: 'loginUserName');
+    return value;
+  }
+
+  static void deleteLoginUsername() async {
+    await _storage.delete(key: 'loginUserName');
+  }
+
+  static void setLoginPassword(String password) async {
+    await _storage.write(key: 'loginPassword', value: password);
+  }
+
+  static Future<String?> currentLoginPassword() async {
+    final value = await _storage.read(key: 'loginPassword');
+    return value;
+  }
+
+  static void deleteLoginPassword() async {
+    await _storage.delete(key: 'loginPassword');
+  }
 }

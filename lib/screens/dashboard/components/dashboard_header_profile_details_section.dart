@@ -14,11 +14,13 @@ class DashboardHeaderProfileDetailsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentHour = DateTime.now().hour;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CustomText(
-          text: 'Welcome back, $userFirstName',
+          text:
+              'Good ${currentHour < 12 ? 'Morning' : currentHour >= 12 && currentHour < 16 ? 'Afternoon' : 'Evening'}, $userFirstName',
           textSize: 20.sp,
           textColor: Colors.white,
           fontFamily: 'Montserrat',

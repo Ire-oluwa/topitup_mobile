@@ -28,6 +28,7 @@ dependencies:
   libphonenumber: ^2.0.2
   flutter_native_contact_picker: ^0.0.3
   intl: ^0.17.0
+  local_auth: ^2.1.2
 
 
 dev_dependencies:

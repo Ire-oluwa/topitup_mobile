@@ -1,16 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
-import '../../constants/app_constants.dart';
 import '../../providers/api_key_provider.dart';
-import '../../providers/device_info_provider.dart';
 import '../../services/networking/web_api/user_api.dart';
+import '../../constants/app_constants.dart';
+import '../../providers/device_info_provider.dart';
 import '../../services/secure_storage/secure_storage.dart';
 import '../../utils/snackbar.dart';
 import '../components/custom_auth_screen_background.dart';
@@ -34,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  final LocalAuthentication auth = LocalAuthentication();
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +150,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: 10.w,
                                       ),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () async =>
+                                            await _biometricLogin(context),
                                         icon: SvgPicture.asset(
                                           'assets/svg/biometric.svg',
                                         ),
@@ -264,6 +268,52 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Future<void> _biometricLogin(BuildContext context) async {
+    final userName = await SecureStorage.currentLoginUsername();
+    final password = await SecureStorage.currentLoginPassword();
+    if (userName != null &&
+        userName != "" &&
+        password != null &&
+        password != "") {
+      final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+      final bool canAuthenticate =
+          canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+      final availableBiometrics = await auth.getAvailableBiometrics();
+      bool didAuthenticate = false;
+      if (canAuthenticate && availableBiometrics.isNotEmpty) {
+        try {
+          didAuthenticate = await auth.authenticate(
+              localizedReason:
+                  'Please authenticate with Fingerprint or Face ID to proceed with login',
+              options: const AuthenticationOptions(biometricOnly: true));
+        } on PlatformException catch (e) {
+          print(e);
+          // if (e.code == auth_error.notAvailable ||
+          //     e.code == auth_error.notEnrolled) {}
+        }
+      }
+      if (didAuthenticate) {
+        _userNameController.text = userName;
+        _passwordController.text = password;
+        if (!mounted) return;
+        await _loginUser(context);
+        return;
+      }
+      if (!mounted) return;
+      displaySnackbar(
+        context,
+        'Invalid credentials.',
+      );
+      return;
+    }
+    if (!mounted) return;
+    _submitLogin(context);
+    // displaySnackbar(
+    //   context,
+    //   'First time login requires filling the form.',
+    // );
+  }
+
   Future<void> _loginUser(BuildContext context) async {
     _makeLoadingTrue();
     final deviceId = context.read<DeviceInfo>().getDeviceId;
@@ -279,6 +329,8 @@ class _LoginScreenState extends State<LoginScreen> {
         if (data['api_key'] != "") {
           if (!mounted) return;
           SecureStorage.setUserApiKey(data['api_key']);
+          SecureStorage.setLoginUsername(_userNameController.text);
+          SecureStorage.setLoginPassword(_passwordController.text);
           context.read<ApiKey>().apiKey = data['api_key'];
           _makeLoadingFalse();
           Navigator.of(context).pushNamedAndRemoveUntil(

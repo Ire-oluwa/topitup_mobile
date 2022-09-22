@@ -4,22 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../history/transaction_history_screen.dart';
+
+import '../../constants/app_constants.dart';
 import '../../models/wallet_balance.dart';
 import '../../providers/api_key_provider.dart';
 import '../../providers/device_info_provider.dart';
 import '../../providers/wallet_balance_provider.dart';
-import '../services/services_screen.dart';
 import '../../services/networking/web_api/wallet_balance_api.dart';
 import '../../utils/snackbar.dart';
-import '../components/custom_bottom_navigation_icon.dart';
-import 'components/side_nav_bar_menu.dart';
-import '../../constants/app_constants.dart';
 import '../bottom_navigation/bottom_navigation_bar.dart';
-import '../components/custom_text.dart';
+import '../components/custom_bottom_navigation_icon.dart';
 import '../components/custom_dashboard_feature_icon_card.dart';
+import '../components/custom_text.dart';
+import '../history/transaction_history_screen.dart';
+import '../services/services_screen.dart';
 import 'components/dashboard_header_profile_details_section.dart';
 import 'components/dashboard_header_transaction_details_card.dart';
+import 'components/side_nav_bar_menu.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -212,74 +213,73 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
               SizedBox(
-                height: kDefaultPadding.h + 10,
+                height: kDefaultPadding.h * 2,
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CustomDashboardFeatureIconCard(
-                          icon: 'assets/svg/airtime-icon.svg',
-                          label: 'Buy Airtime',
-                          onPressed: () =>
-                              Navigator.of(context).pushReplacementNamed(
-                            BottomNavBar.data,
-                          ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomDashboardFeatureIconCard(
+                        icon: 'assets/svg/airtime-icon.svg',
+                        label: 'Buy Airtime',
+                        onPressed: () =>
+                            Navigator.of(context).pushReplacementNamed(
+                          BottomNavBar.data,
                         ),
-                        CustomDashboardFeatureIconCard(
-                          icon: 'assets/svg/data-icon.svg',
-                          label: 'Buy Data',
-                          onPressed: () =>
-                              Navigator.of(context).pushReplacementNamed(
-                            BottomNavBar.data,
-                          ),
+                      ),
+                      CustomDashboardFeatureIconCard(
+                        icon: 'assets/svg/data-icon.svg',
+                        label: 'Buy Data',
+                        onPressed: () =>
+                            Navigator.of(context).pushReplacementNamed(
+                          BottomNavBar.data,
                         ),
-                        CustomDashboardFeatureIconCard(
-                          icon: 'assets/svg/internet-icon.svg',
-                          label: 'Internet',
-                          onPressed: () =>
-                              Navigator.of(context).pushReplacementNamed(
-                            BottomNavBar.internet,
-                          ),
+                      ),
+                      CustomDashboardFeatureIconCard(
+                        icon: 'assets/svg/internet-icon.svg',
+                        label: 'Internet',
+                        onPressed: () =>
+                            Navigator.of(context).pushReplacementNamed(
+                          BottomNavBar.internet,
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: kDefaultPadding.h * 2,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        CustomDashboardFeatureIconCard(
-                          icon: 'assets/svg/cable-icon.svg',
-                          label: 'Cable Tv',
-                          onPressed: () =>
-                              Navigator.of(context).pushReplacementNamed(
-                            BottomNavBar.cable,
-                          ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: kDefaultPadding.h * 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomDashboardFeatureIconCard(
+                        icon: 'assets/svg/cable-icon.svg',
+                        label: 'Cable Tv',
+                        onPressed: () =>
+                            Navigator.of(context).pushReplacementNamed(
+                          BottomNavBar.cable,
                         ),
-                        CustomDashboardFeatureIconCard(
-                          icon: 'assets/svg/electricity-icon.svg',
-                          label: 'Pay Electric Bills',
-                          onPressed: () =>
-                              Navigator.of(context).pushReplacementNamed(
-                            BottomNavBar.electricity,
-                          ),
+                      ),
+                      CustomDashboardFeatureIconCard(
+                        icon: 'assets/svg/electricity-icon.svg',
+                        label: 'Pay Electric Bills',
+                        onPressed: () =>
+                            Navigator.of(context).pushReplacementNamed(
+                          BottomNavBar.electricity,
                         ),
-                        CustomDashboardFeatureIconCard(
-                          icon: 'assets/svg/others.svg',
-                          label: 'Others',
-                          onPressed: () => Navigator.of(context).pushNamed(
-                            ServicesScreen.id,
-                          ),
+                      ),
+                      CustomDashboardFeatureIconCard(
+                        icon: 'assets/svg/others.svg',
+                        label: 'Others',
+                        onPressed: () => Navigator.of(context).pushNamed(
+                          ServicesScreen.id,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

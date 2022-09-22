@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../constants/app_constants.dart';
 import 'custom_text.dart';
 
@@ -24,10 +25,10 @@ class CustomTransactionHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.h),
-      child: InkWell(
-        onTap: () {},
+    return InkWell(
+      onTap: () {},
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 2.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +39,7 @@ class CustomTransactionHistoryCard extends StatelessWidget {
               height: 30.h,
             ),
             SizedBox(
-              width: kDefaultPadding.w - 5,
+              width: kDefaultPadding.w - 8,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,22 +60,25 @@ class CustomTransactionHistoryCard extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  text: transactionAmount,
-                  fontWeight: FontWeight.w700,
-                  textSize: 13.sp,
-                ),
-                SizedBox(
-                  height: 3.h,
-                ),
-                CustomText(
-                  text: transactionPayStatus,
-                  textColor: transactionStatusColour,
-                ),
-              ],
+            SizedBox(
+              width: 65.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    text: transactionAmount,
+                    fontWeight: FontWeight.w700,
+                    textSize: 13.sp,
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  CustomText(
+                    text: transactionPayStatus,
+                    textColor: transactionStatusColour,
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               width: kDefaultPadding.w + 5,
