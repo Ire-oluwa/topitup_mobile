@@ -12,22 +12,23 @@ import 'package:topitup/screens/components/custom_dropdown_form_field.dart';
 import 'package:topitup/screens/components/custom_text_form_field.dart';
 import 'package:topitup/screens/dashboard/dashboard_screen.dart';
 import 'package:topitup/utils/dialogs.dart';
-import '../../models/transaction_response.dart';
-import '../transaction_response/transaction_response_screen.dart';
-import '../../models/available_service.dart';
-import 'components/choose_airtime_amount_widget.dart';
-import '../../utils/snackbar.dart';
+
 import '../../constants/app_constants.dart';
+import '../../models/available_service.dart';
 import '../../models/sub_service.dart';
+import '../../models/transaction_response.dart';
 import '../../providers/api_key_provider.dart';
 import '../../providers/device_info_provider.dart';
+import '../../services/networking/web_api/data_api.dart';
+import '../../utils/snackbar.dart';
 import '../components/custom_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
+import '../transaction_response/transaction_response_screen.dart';
+import 'components/choose_airtime_amount_widget.dart';
 import 'components/network_provider_card_icon.dart';
 import 'components/service_type_card.dart';
 import 'components/sub_service_type_card.dart';
-import '../../services/networking/web_api/data_api.dart';
 
 class DataScreen extends StatefulWidget {
   const DataScreen({Key? key}) : super(key: key);
