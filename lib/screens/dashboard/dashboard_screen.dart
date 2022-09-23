@@ -40,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // final user = ModalRoute.of(context)!.settings.arguments;
+    // final userName = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       key: _key,
       drawer: Drawer(

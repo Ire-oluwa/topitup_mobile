@@ -279,30 +279,37 @@ class _LoginScreenState extends State<LoginScreen> {
       final bool canAuthenticate =
           canAuthenticateWithBiometrics || await auth.isDeviceSupported();
       final availableBiometrics = await auth.getAvailableBiometrics();
-      bool didAuthenticate = false;
       if (canAuthenticate && availableBiometrics.isNotEmpty) {
+        bool didAuthenticate = false;
         try {
           didAuthenticate = await auth.authenticate(
               localizedReason:
                   'Please authenticate with Fingerprint or Face ID to proceed with login',
-              options: const AuthenticationOptions(biometricOnly: true));
+              options: const AuthenticationOptions(
+                  biometricOnly: true, stickyAuth: true));
         } on PlatformException catch (e) {
           print(e);
           // if (e.code == auth_error.notAvailable ||
           //     e.code == auth_error.notEnrolled) {}
         }
-      }
-      if (didAuthenticate) {
-        _userNameController.text = userName;
-        _passwordController.text = password;
+        if (didAuthenticate) {
+          _userNameController.text = userName;
+          _passwordController.text = password;
+          if (!mounted) return;
+          await _loginUser(context);
+          return;
+        }
         if (!mounted) return;
-        await _loginUser(context);
+        displaySnackbar(
+          context,
+          'Invalid credentials',
+        );
         return;
       }
       if (!mounted) return;
       displaySnackbar(
         context,
-        'Invalid credentials.',
+        'Biometric Authorization not Available',
       );
       return;
     }
@@ -324,7 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body);
-      print(data);
+      // print(data);
       if (data['status'] == 1) {
         if (data['api_key'] != "") {
           if (!mounted) return;

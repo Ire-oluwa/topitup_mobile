@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
+
 import '../../constants/app_constants.dart';
 import '../../models/available_service.dart';
 import '../../models/sub_service.dart';
@@ -11,14 +12,14 @@ import '../../models/transaction_response.dart';
 import '../../providers/api_key_provider.dart';
 import '../../providers/device_info_provider.dart';
 import '../../providers/tv_provider.dart';
+import '../../services/networking/web_api/cable_api.dart';
+import '../../utils/snackbar.dart';
 import '../components/custom_dropdown_form_field.dart';
 import '../components/custom_screen_background.dart';
 import '../components/custom_text.dart';
 import '../components/custom_text_button.dart';
 import '../components/custom_text_form_field.dart';
 import '../transaction_response/transaction_response_screen.dart';
-import '../../services/networking/web_api/cable_api.dart';
-import '../../utils/snackbar.dart';
 
 class CableScreen extends StatefulWidget {
   const CableScreen({Key? key}) : super(key: key);

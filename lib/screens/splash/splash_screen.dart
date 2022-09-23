@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../login/login_screen.dart';
+import '../../services/secure_storage/secure_storage.dart';
 
 import '../../providers/device_info_provider.dart';
 import '../home/home_screen.dart';
@@ -21,6 +23,8 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   int? _initScreen;
   String _deviceId = '';
+  String? _loggedInUsername;
+  String? _loggedInPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     _checkForFirstTimeUser();
+    _checkForAlreadyLoggedInUser();
     super.initState();
   }
 
@@ -53,7 +58,9 @@ class _SplashScreenState extends State<SplashScreen> {
       () => Navigator.of(context).pushNamedAndRemoveUntil(
         _initScreen == 0 || _initScreen == null
             ? OnboardingScreen.id
-            : HomeScreen.id,
+            : _loggedInUsername != null && _loggedInPassword != null
+                ? LoginScreen.id
+                : HomeScreen.id,
         (route) => false,
       ),
     );
@@ -69,6 +76,15 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<String?> getDeviceId() async {
     String? deviceId = await PlatformDeviceId.getDeviceId;
     return deviceId;
+  }
+
+  void _checkForAlreadyLoggedInUser() async {
+    final username = await SecureStorage.currentLoginUsername();
+    final password = await SecureStorage.currentLoginPassword();
+    setState(() {
+      _loggedInUsername = username;
+      _loggedInPassword = password;
+    });
   }
 
   void _checkForFirstTimeUser() async {
