@@ -23,6 +23,7 @@ class TransactionResponseScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: kPrimaryColour,
       appBar: AppBar(
+        centerTitle: true,
         title: CustomText(
           text: 'Transaction Details',
           fontFamily: 'Montserrat',

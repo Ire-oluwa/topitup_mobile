@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'screens/about/about_screen.dart';
+import 'screens/help/help_screen.dart';
+import 'screens/settings/settings_screen.dart';
 import 'screens/history/transaction_history_screen.dart';
 import 'providers/tv_provider.dart';
 import 'providers/wallet_balance_provider.dart';
@@ -104,6 +107,9 @@ class TopitupNg extends StatelessWidget {
           ServicesScreen.id: (context) => const ServicesScreen(),
           TransactionHistoryScreen.id: (context) =>
               const TransactionHistoryScreen(),
+          SettingsScreen.id: (context) => const SettingsScreen(),
+          HelpScreen.id: (context) => const HelpScreen(),
+          AboutScreen.id: (context) => const AboutScreen(),
         },
       ),
     );

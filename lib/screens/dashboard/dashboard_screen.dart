@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import '../about/about_screen.dart';
+import '../help/help_screen.dart';
+import '../settings/settings_screen.dart';
 
 import '../../constants/app_constants.dart';
 import '../../models/wallet_balance.dart';
@@ -119,17 +122,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
             SideNavBarMenu(
               iconName: 'assets/svg/setting-icon.svg',
               label: 'Settings',
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed(
+                SettingsScreen.id,
+              ),
             ),
             SideNavBarMenu(
               iconName: 'assets/svg/help-support-icon.svg',
               label: 'Help & Support',
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed(
+                HelpScreen.id,
+              ),
             ),
             SideNavBarMenu(
               iconName: 'assets/svg/about-icon.svg',
               label: 'About',
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed(
+                AboutScreen.id,
+              ),
             ),
             SizedBox(
               height: kDefaultPadding.h,
