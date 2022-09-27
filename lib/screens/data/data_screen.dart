@@ -262,17 +262,14 @@ class _DataScreenState extends State<DataScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              width: 280.w,
+                            Expanded(
+                              // width: 300.w,
                               child: CustomTextFormField(
                                 controller: _mobileNumberController,
                                 keyboardType: TextInputType.phone,
                                 inputAction: TextInputAction.done,
                                 validate: kRequiredField,
                               ),
-                            ),
-                            SizedBox(
-                              width: 5.w,
                             ),
                             GestureDetector(
                               onTap: () async {
@@ -298,7 +295,7 @@ class _DataScreenState extends State<DataScreen> {
                                 color: kSecondaryColour,
                                 child: Padding(
                                   padding: EdgeInsets.all(
-                                    10.w,
+                                    10.5.w,
                                   ),
                                   child: SvgPicture.asset(
                                     'assets/svg/contact-icon.svg',
