@@ -11,7 +11,8 @@ class CustomDropdownFormField extends StatelessWidget {
     required this.selectedItem,
     required this.hintText,
     this.fieldTitle,
-    this.validate, this.selectedValue,
+    this.validate,
+    this.selectedValue,
   }) : super(key: key);
 
   final List<DropdownMenuItem<String>> items;

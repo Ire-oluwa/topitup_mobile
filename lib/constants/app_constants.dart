@@ -21,7 +21,7 @@ final kPasswordValidator = MultiValidator([
 final kRequiredField = RequiredValidator(errorText: '* Required');
 const kDropdownFieldDecoration = InputDecoration(
   contentPadding: EdgeInsets.symmetric(
-    vertical: 1.0,
+    vertical: 5.0,
     horizontal: 8.0,
   ),
   hintText: 'Select data',
