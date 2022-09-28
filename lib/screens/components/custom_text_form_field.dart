@@ -15,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.textCapitalization = TextCapitalization.sentences,
     this.suffixIcon,
+    this.onKeyUp,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -26,10 +27,13 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText;
   final TextCapitalization textCapitalization;
   final Widget? suffixIcon;
+  final Function(String)? onKeyUp;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onKeyUp,
+      // onEditingComplete: onCompleteEdit,
       controller: controller,
       validator: validate,
       textInputAction: inputAction,

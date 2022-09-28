@@ -47,6 +47,18 @@ class CableApi {
     return responseData;
   }
 
+  static Future<dynamic> verifyCustomer({
+    required String smartCardNumber,
+    required String productCode,
+    required String apiKey,
+  }) async {
+    final responseData = await NetworkHelper.postRequest(
+      url:
+          '${BaseUrl.getBaseUrl}/api/v2/tv/?api_key=$apiKey&smartcard_number=$smartCardNumber&product_code=$productCode&task=verify&call back=https://pmcsms.com/callback.php',
+    );
+    return responseData;
+  }
+
   static Future<dynamic> buyTvSubscription({
     required String productCode,
     required String recipientCardNumber,
