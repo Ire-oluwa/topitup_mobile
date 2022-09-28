@@ -196,55 +196,62 @@ class _DataScreenState extends State<DataScreen> {
                             _isDataActive &&
                                 _selectedService != "" &&
                                 _subServices.isNotEmpty)
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              CustomText(
-                                text: 'Select Network Provider',
-                                alignText: TextAlign.center,
-                                textSize: 16.39.sp,
-                                textColor: kPrimaryColour,
-                                fontFamily: 'Montserrat',
-                              ),
-                              SizedBox(
-                                height: kDefaultPadding.h - 5,
-                              ),
-                              SizedBox(
-                                width: double.infinity,
-                                child: Wrap(
-                                  alignment: WrapAlignment.spaceEvenly,
-                                  spacing: 5,
-                                  runSpacing: kDefaultPadding.h,
-                                  children: _subServices
-                                      .map(
-                                        (subService) => NetworkProviderCardIcon(
-                                          serviceName: subService.name!,
-                                          networkProviderLogo: subService.code!
-                                                  .contains('airtel')
-                                              ? 'assets/logos/airtel.png'
-                                              : subService.code!.contains('glo')
-                                                  ? 'assets/logos/Glo.png'
-                                                  : subService.code!
-                                                          .contains('9mobile')
-                                                      ? 'assets/logos/9mobile.png'
-                                                      : 'assets/logos/mtn.png',
-                                          onPressed: () async {
-                                            await _getAvailableServices(
-                                              apiKey: context
-                                                  .read<ApiKey>()
-                                                  .getApiKey,
-                                              deviceId: context
-                                                  .read<DeviceInfo>()
-                                                  .getDeviceId,
-                                              subServiceCode: subService.code!,
-                                            );
-                                          },
-                                        ),
-                                      )
-                                      .toList(),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 400),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CustomText(
+                                  text: 'Select Network Provider',
+                                  alignText: TextAlign.center,
+                                  textSize: 16.39.sp,
+                                  textColor: kPrimaryColour,
+                                  fontFamily: 'Montserrat',
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: kDefaultPadding.h - 5,
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Wrap(
+                                    alignment: WrapAlignment.spaceEvenly,
+                                    spacing: 5,
+                                    runSpacing: kDefaultPadding.h,
+                                    children: _subServices
+                                        .map(
+                                          (subService) =>
+                                              NetworkProviderCardIcon(
+                                            serviceName: subService.name!,
+                                            networkProviderLogo: subService
+                                                    .code!
+                                                    .contains('airtel')
+                                                ? 'assets/logos/airtel.png'
+                                                : subService.code!
+                                                        .contains('glo')
+                                                    ? 'assets/logos/Glo.png'
+                                                    : subService.code!
+                                                            .contains('9mobile')
+                                                        ? 'assets/logos/9mobile.png'
+                                                        : 'assets/logos/mtn.png',
+                                            onPressed: () async {
+                                              await _getAvailableServices(
+                                                apiKey: context
+                                                    .read<ApiKey>()
+                                                    .getApiKey,
+                                                deviceId: context
+                                                    .read<DeviceInfo>()
+                                                    .getDeviceId,
+                                                subServiceCode:
+                                                    subService.code!,
+                                              );
+                                            },
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         SizedBox(
                           height: kDefaultPadding.h * 2,

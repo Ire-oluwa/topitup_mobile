@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../login/login_screen.dart';
-import '../../services/secure_storage/secure_storage.dart';
 
 import '../../providers/device_info_provider.dart';
+import '../../services/secure_storage/secure_storage.dart';
 import '../home/home_screen.dart';
+import '../login/login_screen.dart';
 import '../onboarding/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {

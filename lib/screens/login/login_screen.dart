@@ -9,10 +9,10 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/api_key_provider.dart';
-import '../../services/networking/web_api/user_api.dart';
 import '../../constants/app_constants.dart';
+import '../../providers/api_key_provider.dart';
 import '../../providers/device_info_provider.dart';
+import '../../services/networking/web_api/user_api.dart';
 import '../../services/secure_storage/secure_storage.dart';
 import '../../utils/snackbar.dart';
 import '../components/custom_auth_screen_background.dart';

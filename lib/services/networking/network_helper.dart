@@ -21,7 +21,7 @@ class NetworkHelper {
   static Future<dynamic> postRequest(
       {required String url,
       Map<String, String>? headers,
-      required Object body}) async {
+       Object? body}) async {
     response = await http.post(
       Uri.parse(url),
       headers: headers,
