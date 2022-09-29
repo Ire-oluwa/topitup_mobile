@@ -254,18 +254,11 @@ class _CableScreenState extends State<CableScreen> {
                         ),
                         CustomTextButton(
                           text: 'Pay: ₦$_paymentPrice',
-                          onPressed: () => _verificationData != null &&
-                                      _verificationData!.textStatus!
-                                          .contains('SUCCESSFUL') ||
-                                  _verificationData!.textStatus!
-                                      .contains('successful')
-                              ? _submitPayment(
-                                  context,
-                                  apiKey: context.read<ApiKey>().getApiKey,
-                                  deviceId:
-                                      context.read<DeviceInfo>().getDeviceId,
-                                )
-                              : null,
+                          onPressed: () async => await _submitPayment(
+                            context,
+                            apiKey: context.read<ApiKey>().getApiKey,
+                            deviceId: context.read<DeviceInfo>().getDeviceId,
+                          ),
                           backgroundColour: kPrimaryColour,
                           borderColour: Colors.transparent,
                           textColour: Colors.white,
@@ -386,7 +379,7 @@ class _CableScreenState extends State<CableScreen> {
     );
   }
 
-  void _submitPayment(BuildContext context,
+  Future<void> _submitPayment(BuildContext context,
       {required String apiKey, required String deviceId}) async {
     if (_cableTvFormKey.currentState!.validate()) {
       if (_productCode != '') {
@@ -396,17 +389,24 @@ class _CableScreenState extends State<CableScreen> {
           displaySnackbar(context, 'Choose an amount!');
           return;
         }
-        final walletBalance = context.read<WalletBalance>().walletBalance;
-        if (double.parse(_paymentPrice) > walletBalance) {
-          displayInsufficientWallentBalanceDialog(
-            context,
-            refresh: () => Navigator.of(context)
-                .pushNamedAndRemoveUntil(DashboardScreen.id, (route) => false),
-            topUp: () {},
-          );
+        if (_verificationData != null &&
+                _verificationData!.textStatus!.contains('SUCCESSFUL') ||
+            _verificationData!.textStatus!.contains('successful')) {
+          final walletBalance = context.read<WalletBalance>().walletBalance;
+          if (double.parse(_paymentPrice) > walletBalance) {
+            displayInsufficientWallentBalanceDialog(
+              context,
+              refresh: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  DashboardScreen.id, (route) => false),
+              topUp: () {},
+            );
+            return;
+          }
+          await _buyTvSubscription(apiKey: apiKey, deviceId: deviceId);
           return;
         }
-        await _buyTvSubscription(apiKey: apiKey, deviceId: deviceId);
+        if (!mounted) return;
+        displaySnackbar(context, 'Invalid smartcard number!');
         return;
       }
       if (!mounted) return;
