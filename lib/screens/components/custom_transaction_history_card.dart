@@ -44,10 +44,14 @@ class CustomTransactionHistoryCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(
-                  text: transactionTypelabel,
-                  fontWeight: FontWeight.w600,
-                  textColor: kSecondaryColour,
+                SizedBox(
+                  width: 200.w,
+                  child: CustomText(
+                    text: transactionTypelabel,
+                    fontWeight: FontWeight.w600,
+                    textColor: kSecondaryColour,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 SizedBox(
                   height: 3.h,
