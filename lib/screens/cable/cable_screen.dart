@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import '../../models/customer_cable_verification.dart';
+import '../../models/customer_verification.dart';
 import '../../providers/wallet_balance_provider.dart';
 import '../dashboard/dashboard_screen.dart';
 import '../../utils/dialogs.dart';
@@ -39,8 +39,10 @@ class _CableScreenState extends State<CableScreen> {
   String _paymentPrice = '0.00';
   String _productCode = '';
   bool _isLoading = false;
+  bool _isCustomPackage = false;
   CustomerCableVerification? _verificationData;
   final _smartCardNumberController = TextEditingController();
+  final _amountController = TextEditingController();
   final _cableTvFormKey = GlobalKey<FormState>();
   List<AvailableServiceModel> _availableServices = [
     AvailableServiceModel(
@@ -185,19 +187,55 @@ class _CableScreenState extends State<CableScreen> {
                             final selectedPlan = _availableServices.firstWhere(
                                 (servize) =>
                                     servize.systemName == selectedItem);
-                            setState(() {
-                              _productCode = selectedItem!;
-                              _paymentPrice = selectedPlan.defaultPrice!;
-                            });
                             if (_productCode != '') {
                               await _verifyCustomer(
                                 apiKey: context.read<ApiKey>().getApiKey,
                               );
                             }
+                            if (selectedItem!.contains('custom')) {
+                              setState(() {
+                                _productCode = selectedItem;
+                                _isCustomPackage = true;
+                                _paymentPrice = '0.00';
+                              });
+                              return;
+                            }
+                            setState(() {
+                              _isCustomPackage = false;
+                              _productCode = selectedItem;
+                              _paymentPrice = selectedPlan.defaultPrice!;
+                            });
                           },
                           hintText: 'Select package',
-                          validate: kRequiredField,
                         ),
+                        if (_isCustomPackage)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              SizedBox(
+                                height: kDefaultPadding.h,
+                              ),
+                              const CustomText(
+                                text: 'Amount',
+                                fontFamily: 'Montserrat',
+                                textColor: kPrimaryColour,
+                              ),
+                              SizedBox(
+                                height: 5.h,
+                              ),
+                              CustomTextFormField(
+                                onKeyUp: (p0) {
+                                  setState(() {
+                                    _paymentPrice = p0;
+                                  });
+                                },
+                                controller: _amountController,
+                                keyboardType: TextInputType.number,
+                                inputAction: TextInputAction.done,
+                                validate: kRequiredField,
+                              ),
+                            ],
+                          ),
                         if (_verificationData != null)
                           SizedBox(
                             height: kDefaultPadding.h + 10,
@@ -290,6 +328,7 @@ class _CableScreenState extends State<CableScreen> {
   @override
   void dispose() {
     _smartCardNumberController.dispose();
+    _amountController.dispose();
     super.dispose();
   }
 
