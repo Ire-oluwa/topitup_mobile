@@ -119,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     suffixIcon: IconButton(
                                       icon: FaIcon(
                                         _obscurePassword == false
-                                            ? FontAwesomeIcons.solidEyeSlash
-                                            : FontAwesomeIcons.solidEye,
+                                            ? FontAwesomeIcons.solidEye
+                                            : FontAwesomeIcons.solidEyeSlash,
                                         size: kDefaultIconSize.sp,
                                       ),
                                       onPressed: () => setState(() {
@@ -162,6 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: kDefaultPadding.h,
                                   ),
                                   GestureDetector(
+                                    //TODO: navigate to forgot password screen.
                                     onTap: () {},
                                     child: const CustomText(
                                       text: 'Forgot Password?',
@@ -335,6 +336,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (data['status'] == 1) {
         if (data['api_key'] != "") {
           if (!mounted) return;
+
           SecureStorage.setUserApiKey(data['api_key']);
           SecureStorage.setLoginUsername(_userNameController.text);
           SecureStorage.setLoginPassword(_passwordController.text);
