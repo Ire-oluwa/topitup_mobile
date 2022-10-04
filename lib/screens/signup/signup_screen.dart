@@ -183,8 +183,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                       suffixIcon: IconButton(
                                         icon: FaIcon(
                                           _obscurePassword == false
-                                              ? FontAwesomeIcons.solidEyeSlash
-                                              : FontAwesomeIcons.solidEye,
+                                              ? FontAwesomeIcons.solidEye
+                                              : FontAwesomeIcons.solidEyeSlash,
                                           size: kDefaultIconSize.sp,
                                         ),
                                         onPressed: () => setState(
@@ -348,7 +348,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (!mounted) return;
     displaySnackbar(
       context,
-      'Error occured! Try again later.',
+      'Error occurred! Try again later.',
     );
   }
 
