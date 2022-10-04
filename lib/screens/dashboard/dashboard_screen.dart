@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:topitup/services/secure_storage/secure_storage.dart';
 
 import '../../constants/app_constants.dart';
 import '../../models/wallet_balance.dart';
@@ -37,6 +38,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   int _selectedIndex = 0;
+
   // String walletBalance = '0.00';
   // String cashBackBalance = '0.00';
 
@@ -63,24 +65,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomText(
-                        text: 'John Williams',
-                        textSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                        textColor: kPrimaryColour,
-                      ),
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: FaIcon(
-                          FontAwesomeIcons.arrowLeft,
-                          size: kDefaultIconSize.sp,
-                          color: const Color(0xff3A3A3A),
-                        ),
-                      ),
-                    ],
+                  FutureBuilder<String?>(
+                    future: _getUsername(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<String?> snapshot) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: snapshot.data.toString(),
+                            textSize: 20.sp,
+                            fontWeight: FontWeight.w600,
+                            textColor: kPrimaryColour,
+                          ),
+                          IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            icon: FaIcon(
+                              FontAwesomeIcons.arrowLeft,
+                              size: kDefaultIconSize.sp,
+                              color: const Color(0xff3A3A3A),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                   const Spacer(),
                   const CustomText(
@@ -193,9 +201,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             padding: EdgeInsets.symmetric(
                               horizontal: kDefaultPadding.w * 2,
                             ),
-                            child: const DashboardHeaderProfileDetailsSection(
-                              userFirstName: 'John',
-                              userProfileImage: 'assets/marston.jpeg',
+                            child: FutureBuilder<String?>(
+                              future: _getUsername(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<String?> snapshot) {
+                                return DashboardHeaderProfileDetailsSection(
+                                  userFirstName:
+                                      //TODO: get username
+                                      snapshot.data.toString(),
+                                  userProfileImage: 'assets/marston.jpeg',
+                                );
+                              },
+                              // child: DashboardHeaderProfileDetailsSection(
+                              //   userFirstName:
+                              //       //TODO: get username
+                              //       SecureStorage.currentLoginUsername(),
+                              //   userProfileImage: 'assets/marston.jpeg',
+                              // ),
                             ),
                           ),
                         ],
@@ -401,7 +423,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     if (!mounted) return;
     displaySnackbar(
       context,
-      'Error occured! Refresh Wallet.',
+      'Error occurred! Refresh Wallet.',
     );
   }
+}
+
+Future<String?> _getUsername() async {
+  final username = await SecureStorage.currentLoginUsername();
+  return username;
 }
