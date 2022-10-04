@@ -289,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
               options: const AuthenticationOptions(
                   biometricOnly: true, stickyAuth: true));
         } on PlatformException catch (e) {
-          print(e);
+          debugPrint(e.toString());
           // if (e.code == auth_error.notAvailable ||
           //     e.code == auth_error.notEnrolled) {}
         }
