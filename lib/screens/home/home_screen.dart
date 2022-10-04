@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                   height: kDefaultPadding.h * 2,
                 ),
                 CustomText(
-                  text: 'Provide us with your adequate details where necesary',
+                  text: 'Provide us with your adequate details where necessary',
                   alignText: TextAlign.center,
                   softwrap: true,
                   textSize: 16.0.sp,
